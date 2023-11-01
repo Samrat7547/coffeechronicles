@@ -7,18 +7,25 @@ import com.example.coffeechronicles.jwt.JwtFilter;
 import com.example.coffeechronicles.jwt.JwtUtil;
 import com.example.coffeechronicles.repo.UserRepository;
 import com.example.coffeechronicles.service.UserService;
+import com.google.common.base.Strings;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.mail.MessagingException;
+//import javax.mail.MessagingException;
+//import javax.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,6 +48,8 @@ public class UserServiceImpl implements UserService {
     JwtUtil jwtUtil;
     @Autowired
     JwtFilter jwtFilter;
+    @Autowired
+    private JavaMailSender emailSender;
 
 
     @Override
@@ -202,5 +211,86 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>("Something went wrong due to server", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try {
+            User user = userRepo.findByEmail(jwtFilter.getCurrentUser());
+            if (!user.equals(null)) {
+                if (passwordEncoder.matches(requestMap.get("oldPassword"), user.getPassword())) {
+                    user.setPassword(passwordEncoder.encode(requestMap.get("newPassword")));
+                    userRepo.save(user);
+                    return new ResponseEntity<>("Password Updated Successfully", HttpStatus.OK);
+                }
+                log.info(passwordEncoder.encode(requestMap.get("oldPassword")));
+                return new ResponseEntity<>("Incorrect Old Password", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+//    @Override
+//    public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+//        System.out.println("inside the forgot password function");
+//        try {
+//            User user = userRepo.findByEmail(requestMap.get("email"));
+//            System.out.println("user email is : " + user.getEmail());
+//            if (!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())) {
+//                System.out.println("11");
+//                this.forgetMail(user.getEmail() , "Credentials by Coffee Chronicles" , user.getPassword());
+//                return new ResponseEntity<>("Check Your mail for Credentials", HttpStatus.OK);
+//            }
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//
+//    public void  forgetMail(String to , String subject, String password) throws MessagingException {
+//        MimeMessage message = emailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//        helper.setFrom("androhub30@gmail.com");
+//        helper.setTo(to);
+//        helper.setSubject(subject);
+//        String htmlMSG = "<p><b>Your Login details for Coffee Chronicles</b></p><b>Email:</b>"+ to + "<br><b>Password: </b>" + password + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>";
+//        message.setContent(htmlMSG , "text/html");
+//        emailSender.send(message);
+//    }
+
+
+    @Override
+    public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+        System.out.println("inside the forgot password function");
+        try {
+            User user = userRepo.findByEmail(requestMap.get("email"));
+            System.out.println("user email is : " + user.getEmail());
+            if (!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail())) {
+                System.out.println("11");
+                this.forgetMail(user.getEmail() , "OTP by Coffee Chronicles" , requestMap.get("otp"));
+                return new ResponseEntity<>("Check Your mail for Credentials", HttpStatus.OK);
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    public void  forgetMail(String to , String subject, String otp) throws MessagingException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom("androhub30@gmail.com");
+        helper.setTo(to);
+        helper.setSubject(subject);
+        String htmlMSG = "<p><b>Your Login details for Coffee Chronicles</b></p><b>Email:</b>"+ to + "<br><b>OTP: </b>" + otp + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>";
+        message.setContent(htmlMSG , "text/html");
+        emailSender.send(message);
+    }
 
 }
