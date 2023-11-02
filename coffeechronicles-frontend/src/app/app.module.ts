@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
@@ -31,7 +32,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SignupComponent } from './pages/signup/signup.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -54,6 +56,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HomeComponent,
     NavbarComponent,
     ForgotPasswordComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

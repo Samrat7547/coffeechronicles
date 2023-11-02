@@ -1,0 +1,159 @@
+<!-- <div class="min-h-screen bg-gradient-to-r from-purple-500 to-blue-500">
+  <div class="text-gray-800 py-4">
+    <h2 class="text-2xl font-bold text-start">
+      <span class="float-left"> Total Orders: {{ allOrders.length }}</span>
+      <span class="float-right">
+        Total Menu Items: {{ menuItems.length }}
+      </span>
+    </h2>
+  </div>
+
+  <div class="flex flex-col items-center">
+    <h2 class="text-3xl text-gray-800 font-bold mt-4">Recent Orders</h2>
+    <main class="mx-auto py-6 px-4 sm:px-6 lg:px-8 justify-center items-center">
+      <section class="container bg-white rounded-lg shadow overflow-x-auto">
+        <table class="table-auto w-full whitespace-no-wrap">
+          <thead>
+            <tr class="font-bold">
+              <th class="px-4 py-2 text-center">Ordered by</th>
+              <th class="px-4 py-2 text-center">Orders</th>
+
+              <th class="px-4 py-2 text-center">Total</th>
+            </tr>
+          </thead>
+
+          <tbody class="text-gray-700">
+            <ng-container *ngFor="let order of allOrders; let i = index">
+              <tr>
+                <td class="px-4 py-3">
+                  {{ order.firstName }} {{ order.lastName }} -
+                  {{ order.email }}
+                </td>
+                <td class="px-4 py-3">
+                  <table class="table-auto w-full">
+                    <thead>
+                      <tr>
+                        <th class="px-4 py-2">Name</th>
+                        <th class="px-4 py-2">Price</th>
+                        <th class="px-4 py-2">Quantity</th>
+                        <th class="px-4 py-2">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of order.productDetail">
+                        <td class="px-4 py-3">{{ item.name }}</td>
+                        <td class="px-4 py-3">{{ item.price }}</td>
+                        <td class="px-4 py-3">{{ item.quantity }}</td>
+                        <td class="px-4 py-3">{{ item.total }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+
+                <td class="px-4 py-3">{{ order.totalAmount }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</div> -->
+<div class="min-h-screen bg-gradient-to-r from-purple-500 to-blue-500">
+    <div class="text-gray-800 py-4">
+      <div class="flex justify-between max-w-4xl mx-auto px-4">
+        <div
+          class="bg-blue-500 rounded-lg shadow-lg py-2 px-4 hover:scale-105 transition-all transform w-40 hover:bg-blue-600"
+        >
+          <h3 class="text-2xl font-bold">Total Orders</h3>
+          <span class="text-3xl font-bold">{{ ordersLength }}</span>
+        </div>
+        <div
+          class="bg-purple-500 rounded-lg shadow-lg py-2 px-4 hover:scale-105 transition-all transform w-40 hover:bg-purple-600"
+        >
+          <h3 class="text-2xl font-bold">Total Menu Items</h3>
+          <span class="text-3xl font-bold">{{ menuItems?.length }}</span>
+        </div>
+      </div>
+      <h2 class="text-2xl font-bold text-center mt-4">Recent Orders</h2>
+    </div>
+  
+    <ng-container
+      *ngIf="(allOrders$ | async) && (allOrders$ | async)?.length > 0"
+    >
+      <div class="flex flex-col items-center">
+        <main
+          class="mx-auto py-6 px-4 sm:px-6 lg:px-8 justify-center items-center"
+        >
+          <section class="container bg-white rounded-lg shadow overflow-x-auto">
+            <table class="table-auto w-full border border-gray-400">
+              <thead>
+                <tr class="bg-gray-200 font-bold border border-gray-400">
+                  <th class="px-4 py-2 text-center border border-gray-400">
+                    Ordered by
+                  </th>
+                  <th class="px-4 py-2 text-center border border-gray-400">
+                    Orders
+                    <thead>
+                      <tr>
+                        <th class="px-4 py-2 border">Name</th>
+                        <th class="px-4 py-2 border">Price</th>
+                        <th class="px-4 py-2 border">Quantity</th>
+                        <th class="px-4 py-2 border">Total</th>
+                      </tr>
+                    </thead>
+                  </th>
+                  <th class="px-4 py-2 text-center border border-gray-400">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+  
+              <tbody class="text-gray-700">
+                <ng-container *ngIf="allOrders$ | async as allOrders">
+                  <ng-container *ngFor="let order of allOrders; let i = index">
+                    <tr class="hover:bg-gray-100 border border-gray-400">
+                      <td class="px-4 py-3 border border-gray-400">
+                        {{ order?.createdBy }}
+                      </td>
+                      <td class="px-4 py-3 border border-gray-400">
+                        <table class="table-auto w-full">
+                          <tbody>
+                            <tr *ngFor="let item of order.productDetail">
+                              <td class="px-4 py-3 border">
+                                {{ item?.name }}
+                              </td>
+                              <td class="px-4 py-3 border">
+                                {{ item?.price }}
+                              </td>
+                              <td class="px-4 py-3 border">
+                                {{ item?.quantity }}
+                              </td>
+                              <td class="px-4 py-3 border">
+                                {{ item?.total }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td class="px-4 py-3 border border-gray-400">
+                        {{ order?.totalAmount }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </table>
+          </section>
+        </main>
+      </div>
+    </ng-container>
+    <ng-container
+      *ngIf="!(allOrders$ | async) || (allOrders$ | async)?.length === 0"
+    >
+      <h1 class="text-black text-3xl font-bold text-center mt-8">
+        No orders yet
+      </h1>
+    </ng-container>
+  </div>
+  

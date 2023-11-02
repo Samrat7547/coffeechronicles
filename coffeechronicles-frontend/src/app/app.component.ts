@@ -20,6 +20,9 @@ export class AppComponent {
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
   }
+  isAdmin(){
+    return this.authService.getRole();
+  }
 
   isAuthRoute() {
     return this.router.url === '/login' || this.router.url === '/signup' || this.router.url === '/forgot';

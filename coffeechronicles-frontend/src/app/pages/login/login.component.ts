@@ -6,10 +6,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SharedDataService } from 'src/app/services/sharedData/shared-data.service';
+import { ForgotPasswordComponent } from '../../forgot-password/forgot-password.component';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +30,7 @@ export class LoginComponent {
     private sharedDataService: SharedDataService,
     private router: Router,
     private toastr: ToastrService,
+    private dialog:MatDialog
     // @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -62,14 +66,14 @@ export class LoginComponent {
             this.userDetails = user;
             if (this.authService.getRole()) {
               //admin dashboard
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/home']);
               this.toastr.success(
                 'Yay! You are logged in.',
                 'Admin Login Succesful'
               );
             } else {
               //user-dashboard
-              this.router.navigate(['/user-dashboard/0']);
+              this.router.navigate(['/home']);
               this.toastr.success(
                 'Yay! You are logged in.',
                 'User Login Succesful'
@@ -103,4 +107,5 @@ export class LoginComponent {
     }
     return null;
   }
+  
 }
