@@ -281,6 +281,25 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<String> updatePassword(Map<String, String> requestMap) {
+        try {
+            User user = userRepo.findByEmail(requestMap.get("email"));
+            if (!user.equals(null)) {
+
+                    user.setPassword(passwordEncoder.encode(requestMap.get("password")));
+                    userRepo.save(user);
+                    return new ResponseEntity<>("Password Updated Successfully", HttpStatus.OK);
+
+
+            }
+            return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG",  HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     public void  forgetMail(String to , String subject, String otp) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();

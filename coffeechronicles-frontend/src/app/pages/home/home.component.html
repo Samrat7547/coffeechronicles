@@ -1,12 +1,3 @@
-<!-- <div class="container">
-  <div class="header">
-    <button class="top-button">Sign Up</button>
-    <button class="top-button">Login</button>
-  </div>
-  <h1 class="title">Coffee Chronicles</h1>
-
-</div> -->
-
 <div class="flex flex-col min-h-screen">
   <!-- Hero section -->
   <section
@@ -25,11 +16,28 @@
       <p class="mt-4 text-lg font-medium text-gray-300">
         Explore, roam around and order foods, and of course, a hot beverage
       </p>
+    
+    <ng-container *ngIf="!isAuthenticated()">
       <a
         href="#features"
         class="inline-block px-8 py-3 mt-8 font-medium text-white bg-purple-500 rounded-md hover:bg-purple-600"
         >Get started</a
       >
+    </ng-container>
+    <ng-container *ngIf="!getRole() && isAuthenticated()">
+      <a
+        routerLink="/user-dashboard/0"
+        class="inline-block px-8 py-3 mt-8 font-medium text-white bg-purple-500 rounded-md hover:bg-purple-600"
+        >Get started</a
+      >
+    </ng-container>
+    <ng-container *ngIf="getRole() && isAuthenticated()">
+      <a
+        routerLink="/{{ userDetails.role }}/profile"
+        class="inline-block px-8 py-3 mt-8 font-medium text-white bg-purple-500 rounded-md hover:bg-purple-600"
+        >Get started</a
+      >
+    </ng-container>
     </div>
   </section>
 

@@ -1,15 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { SharedDataService } from 'src/app/services/sharedData/shared-data.service';
+import { AuthService } from '../services/auth/auth.service';
+import { SharedDataService } from '../services/sharedData/shared-data.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class HomeComponent implements OnInit {
+
+export class NavbarComponent implements OnInit {
   userDetails!: any;
   constructor(
     private sharedDataService: SharedDataService,
@@ -19,13 +20,10 @@ export class HomeComponent implements OnInit {
     private toastr: ToastrService
   ) {}
   ngOnInit(): void {
-    this.sharedDataService.userDetailsObservable.subscribe((userDetails) => {
+    this.sharedDataService.userDetailsObservable.subscribe((userDetails: any) => {
       this.userDetails = userDetails;
     });
     // console.log(this.userDetails);
-
-    // Check if the document is in full-screen mode and exit if necessary
-    this.exitFullScreen();
   }
   isAuthenticated() {
     return this.authService.isAuthenticated();
@@ -42,12 +40,5 @@ export class HomeComponent implements OnInit {
   getRole() {
     return this.authService.getRole();
   }
-
-  exitFullScreen() {
-    if (document.fullscreenElement) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-    }
-  }
 }
+

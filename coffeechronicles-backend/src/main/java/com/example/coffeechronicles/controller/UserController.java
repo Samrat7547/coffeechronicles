@@ -106,6 +106,16 @@ public class UserController {
         return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PostMapping(path = "/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> requestMap){
+        try {
+            return userService.updatePassword(requestMap);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 
 }
