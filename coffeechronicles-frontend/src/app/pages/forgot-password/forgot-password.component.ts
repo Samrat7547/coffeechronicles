@@ -48,6 +48,8 @@ export class ForgotPasswordComponent {
           this.step = 'otp-verification';
           this.isEmailVerified = true;
         } catch (error:any) {
+          this.ngxUiLoader.stop();
+          this.toastr.error('WARNING: Username or Email does not exists!');
           console.log(otpData);
           console.log(error);
           // this.ngxUiLoader.start();
