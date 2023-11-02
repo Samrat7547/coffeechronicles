@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth/auth.service';
 import { SharedDataService } from '../services/sharedData/shared-data.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SignupComponent } from '../pages/signup/signup.component';
+import { LoginComponent } from '../pages/login/login.component';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +20,8 @@ export class NavbarComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.sharedDataService.userDetailsObservable.subscribe((userDetails: any) => {
@@ -40,5 +44,7 @@ export class NavbarComponent implements OnInit {
   getRole() {
     return this.authService.getRole();
   }
+
+  
 }
 
