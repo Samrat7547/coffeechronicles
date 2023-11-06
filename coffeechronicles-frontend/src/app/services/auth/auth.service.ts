@@ -45,7 +45,7 @@ export class AuthService {
 
   getRole(): boolean {
     const role = localStorage.getItem('role');
-    return role === 'admin';
+    return role === 'ADMIN';
   }
 
   getUserDetails(): Observable<any> {
