@@ -74,7 +74,7 @@ public class BillServiceImpl implements BillService {
                 document.add(paragraph);
 
                 // Create table in pdf to print data
-                PdfPTable table = new PdfPTable(5);
+                PdfPTable table = new PdfPTable(4);
                 table.setWidthPercentage(100);
                 addTableHeader(table);
 
@@ -264,7 +264,7 @@ public class BillServiceImpl implements BillService {
 
     private void addTableHeader(PdfPTable table) {
         log.info("Inside addTableHeader");
-        Stream.of("Name", "Category", "Quantity", "Price", "Sub Total")
+        Stream.of("Name", "Quantity", "Price", "Sub Total")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -292,9 +292,15 @@ public class BillServiceImpl implements BillService {
     private void addRows(PdfPTable table, Map<String, Object> data) {
         log.info("Inside addRows");
         table.addCell((String) data.get("name"));
-        table.addCell((String) data.get("category"));
+//        table.addCell((String) data.get("category"));
         table.addCell((String) data.get("quantity"));
-        table.addCell(Double.toString((Double) data.get("price")));
-        table.addCell(Double.toString((Double) data.get("total")));
+//        table.addCell(Double.toString((Double) data.get("price")));
+//        table.addCell(Double.toString((Double) data.get("total")));
+        // Convert "price" and "total" to Double
+        double price = Double.parseDouble((String) data.get("price"));
+        double total = Double.parseDouble((String) data.get("total"));
+
+        table.addCell(String.valueOf(price));
+        table.addCell(String.valueOf(total));
     }
 }

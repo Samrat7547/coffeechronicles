@@ -5,44 +5,46 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MenuService {
+export class CategoryService {
 
-  private baseUrl = 'http://localhost:8085/product';
+  private baseUrl = 'http://localhost:8085/category';
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<any> {
+  getCategories(): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(`${this.baseUrl}/allProduct`, {
+    return this.http.get(`${this.baseUrl}/allCategory`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   }
 
-  addProduct(product: any): Observable<any> {
+  addCategory(category: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.post(`${this.baseUrl}/add`, product, {
+    return this.http.post(`${this.baseUrl}/add`, category, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   }
 
-  updateProduct(product: any): Observable<any> {
+  updateCategory(category: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.put(`${this.baseUrl}/update`, product, {
+    return this.http.put(`${this.baseUrl}/update`, category, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   }
 
-  deleteProduct(pid: any): Observable<any> {
+  deleteCategory(cid: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.delete(`${this.baseUrl}/${pid}`, {
+    return this.http.delete(`${this.baseUrl}/${cid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   }
 }
+
+

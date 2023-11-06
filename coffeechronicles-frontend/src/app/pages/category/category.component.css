@@ -1,0 +1,6 @@
+
+  /* Add this CSS class to your component's CSS file or within a <style> tag in your HTML file */
+
+  ::ng-deep .p-card:hover{
+    transform: scale(1.05);
+}

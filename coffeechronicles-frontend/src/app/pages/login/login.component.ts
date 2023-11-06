@@ -66,14 +66,14 @@ export class LoginComponent {
             this.userDetails = user;
             if (this.authService.getRole()) {
               //admin dashboard
-              this.router.navigate(['/home']);
+              this.router.navigate(['/dashboard']);
               this.toastr.success(
                 'Yay! You are logged in.',
                 'Admin Login Succesful'
               );
             } else {
               //user-dashboard
-              this.router.navigate(['/home']);
+              this.router.navigate(['/menu']);
               this.toastr.success(
                 'Yay! You are logged in.',
                 'User Login Succesful'

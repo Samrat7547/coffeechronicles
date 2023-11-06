@@ -23,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { MatSelectModule } from '@angular/material/select';
@@ -34,6 +35,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { MenuComponent } from './pages/menu/menu.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { OrderComponent } from './pages/order/order.component';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -57,6 +61,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NavbarComponent,
     ForgotPasswordComponent,
     DashboardComponent,
+    MenuComponent,
+    CategoryComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +87,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    NgbModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     CardModule,
     ToastrModule.forRoot({
