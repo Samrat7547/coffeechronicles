@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import Order from 'src/app/model/Order';
 import Orders from 'src/app/model/Orders';
 
 @Injectable({
@@ -9,6 +10,17 @@ import Orders from 'src/app/model/Orders';
 export class OrderService {
 
   private baseUrl = 'http://localhost:8085/bill';
+  private orderData: Order[] = [];
+  private orderDataSubject = new BehaviorSubject<Order[]>(this.orderData);
+
+  getOrderData() {
+    return this.orderDataSubject.asObservable();
+  }
+
+  addToOrder(orderItem: Order) {
+    this.orderData.push(orderItem);
+    this.orderDataSubject.next(this.orderData);
+  }
   constructor(private http: HttpClient) {}
 
   addBill(orders: Orders): Observable<any> {
