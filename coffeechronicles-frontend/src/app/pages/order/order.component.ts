@@ -42,6 +42,10 @@ export class OrderComponent implements OnInit {
       paymentMethod: ['', Validators.required],
     });
     this.getProducts();
+    this.orderService.getOrderData().subscribe((orderData) => {
+      this.order = orderData;
+      console.log(this.order)
+    });
   }
 
   decreaseQuantity(index: number) {
@@ -68,34 +72,69 @@ export class OrderComponent implements OnInit {
     this.order.splice(index, 1);
   }
 
+  // addFood() {
+  //   const currentOrder = this.newOrderForm.value;
+  //   if (currentOrder.food != '' && currentOrder.quantity != '') {
+  //     if (parseInt(currentOrder.quantity) < 1) {
+  //       this.toastr.warning(
+  //         'Number of items must be at least one',
+  //         'Invalid quantity'
+  //       );
+  //     } else {
+  //       this.newOrderForm = this.fb.group({
+  //         food: [''],
+  //         quantity: [''],
+  //         orderType: [this.selectedOrderType, Validators.required],
+  //         paymentMethod: [this.selectedPaymentMethod, Validators.required],
+  //       });
+
+  //       const foodAndPrice = currentOrder.food;
+  //       const [food, pr] = foodAndPrice.split(' - ');
+  //       const price = parseFloat(pr).toFixed(2);
+  //       const quantity = currentOrder.quantity;
+  //       const singleOrder: Order = {
+  //         name: food,
+  //         price: price.toString(),
+  //         quantity: quantity.toString(),
+  //         total: (parseFloat(price) * quantity).toFixed(2),
+  //       };
+  //       this.order.push(singleOrder);
+        
+  //     }
+      
+  //   } else {
+  //     this.toastr.warning(
+  //       'Please choose both food option and the quantity',
+  //       'Invalid item'
+  //     );
+  //   }
+    
+  // }
   addFood() {
     const currentOrder = this.newOrderForm.value;
-    if (currentOrder.food != '' && currentOrder.quantity != '') {
-      if (parseInt(currentOrder.quantity) < 1) {
-        this.toastr.warning(
-          'Number of items must be at least one',
-          'Invalid quantity'
-        );
-      } else {
-        this.newOrderForm = this.fb.group({
-          food: [''],
-          quantity: [''],
-          orderType: [this.selectedOrderType, Validators.required],
-          paymentMethod: [this.selectedPaymentMethod, Validators.required],
-        });
-
-        const foodAndPrice = currentOrder.food;
-        const [food, pr] = foodAndPrice.split(' - ');
-        const price = parseFloat(pr).toFixed(2);
-        const quantity = currentOrder.quantity;
-        const singleOrder: Order = {
-          name: food,
-          price: price.toString(),
-          quantity: quantity.toString(),
-          total: (parseFloat(price) * quantity).toFixed(2),
-        };
-        this.order.push(singleOrder);
-      }
+    if (currentOrder.food != '') {
+      // If quantity is not provided or less than 1, set it to 1
+      let quantity = currentOrder.quantity ? parseInt(currentOrder.quantity) : 1;
+  
+      this.newOrderForm = this.fb.group({
+        food: [''],
+        quantity: [quantity], // Set to 1 if not provided or less than 1
+        orderType: [this.selectedOrderType, Validators.required],
+        paymentMethod: [this.selectedPaymentMethod, Validators.required],
+      });
+  
+      const foodAndPrice = currentOrder.food;
+      const [food, pr] = foodAndPrice.split(' - ');
+      const price = parseFloat(pr).toFixed(2);
+      
+      const singleOrder: Order = {
+        name: food,
+        price: price.toString(),
+        quantity: quantity.toString(),
+        total: (parseFloat(price) * quantity).toFixed(2),
+      };
+      
+      this.order.push(singleOrder);
     } else {
       this.toastr.warning(
         'Please choose both food option and the quantity',
@@ -103,6 +142,7 @@ export class OrderComponent implements OnInit {
       );
     }
   }
+  
 
   calculateSubtotal(): string {
     const sumTotal = this.order.reduce((acc, order) => {

@@ -45,4 +45,20 @@ export class MenuService {
       },
     });
   }
+  getActiveProducts(cid:any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.baseUrl}/category/active/${cid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  getCategoryProducts(cid:any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.baseUrl}/category/${cid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

@@ -122,4 +122,15 @@ export class CategoryComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  getAssetImageUrl(name: string): string {
+    // Assuming your assets are stored in a folder named 'assets/images'
+    // and the images have a .jpg extension
+    const imageName = name.toLowerCase().replace(' ', '-') + '.jpg';
+  
+    // Construct the URL to your asset
+    const imageUrl = `assets/${imageName}`;
+  
+    return imageUrl;
+  }
+
 }

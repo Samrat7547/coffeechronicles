@@ -59,18 +59,30 @@
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+          <!-- <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="active">Publish Status</label>
+            <mat-slide-toggle ngModel="{{item.active}}" name="active"></mat-slide-toggle>
+           
+          </div> -->
           <div class="mb-4" formGroupName="category">
-            <label for="category" class="block text-gray-700 font-bold mb-2">Category</label>
+            <label for="category" class="block text-gray-700 font-bold mb-2"
+              >Category</label
+            >
             <select
               id="category"
               formControlName="cid"
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-            <option value="" disabled>Select a category</option>
-            <option *ngFor="let category of categories" [value]="category.cid">{{category.title}}</option>
+              <option value="" disabled>Select a category</option>
+              <option
+                *ngFor="let category of categories"
+                [value]="category.cid"
+              >
+                {{ category.title }}
+              </option>
             </select>
           </div>
-          
+
           <div class="flex justify-center">
             <button
               type="submit"
@@ -88,21 +100,17 @@
 
   <div
     class="flex p-6 pt-24 justify-center items-center"
-    *ngIf="items?.length < 1"
+    *ngIf="menu?.length < 1"
   >
     <h2 class="text-3xl font-bold text-white mb-4 sm:mb-0">
       No menu items added yet
     </h2>
   </div>
 
-  <div
+  <!-- <div
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pt-20"
     *ngIf="items?.length > 0"
   >
-    <!--<div
-      *ngFor="let item of items"
-      class="bg-white shadow-md rounded-md overflow-hidden"
-    >-->
     <p-card
       *ngFor="let item of items"
       header="{{ item.name }}"
@@ -119,7 +127,6 @@
         />
       </p>
       <ng-template pTemplate="footer">
-        <!-- <p class="text-gray-700 ">{{ item.category.title }}</p> -->
         <p class="text-gray-700">
             <span class="font-bold">Category:</span> {{ item.category.title }}
           </p>
@@ -148,17 +155,90 @@
         <ng-container *ngIf="!getRole()">
             <div class="flex flex-col sm:flex-row justify-between mt-4">
               <button
-                routerLink="/order"
+              (click)="addToOrder(item)"
                 class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
               >
-                <i class="fas fa-edit"></i> Order
+                <i class="fa fa-shopping-cart"></i> Add to Cart
               </button>
             </div>
           </ng-container>
       </ng-template>
     </p-card>
 
-    <!-- </div>-->
+  </div> -->
+
+  <div class="flex flex-col" *ngIf="categories?.length > 0">
+    <ng-container *ngFor="let category of categories; let i = index">
+      <div  class="mb-8 category pt-20">
+        <h2 class="text-2xl font-bold text-white bg-primary p-2">
+          {{ category.title }}
+        </h2>
+      <!-- </div> -->
+      <div class="flex flex-wrap">
+        
+        <ng-container *ngFor="let item of category.items">
+          <div class="mb-4 ml-4">
+            <!-- Add a gap between items -->
+            <p-card
+              header="{{ item.name }}"
+              styleClass="shadow-lg p-1 m-4 rounded-4 border border-primary"
+              [style]="{ width: '360px', 'border-radius': '20px' }"
+            >
+              <ng-template pTemplate="header"> </ng-template>
+              <p>
+                <img
+                [src]="getAssetImageUrl(item.name)"
+                  alt="{{ item.name }}"
+                  class="h-48 w-full object-cover"
+                />
+              </p>
+              <ng-template pTemplate="footer">
+                <p class="text-gray-700">
+                  <span class="font-bold">Category:</span> {{ category.title }}
+                </p>
+                <p class="text-gray-700 line-clamp-2">{{ item.description }}</p>
+                <div style="font-size: 30px">
+                  <h1 class="font-bold">{{ item.price | currency : "INR" }}</h1>
+                </div>
+                <ng-container *ngIf="getRole()">
+                  <div class="flex flex-col sm:flex-row justify-between mt-4">
+                    <button
+                      (click)="openEditModal(item)"
+                      class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-3 rounded-full mb-2 sm:mb-0"
+                    >
+                      <i class="fas fa-edit"></i> Update
+                    </button>
+                    <button *ngIf="item.active"
+                      class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
+                    >
+                       Active
+                    </button>
+                    <button
+                      (click)="openDeleteModal(item)"
+                      class="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-3 rounded-full"
+                    >
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!getRole()">
+                  <div class="flex flex-col sm:flex-row justify-between mt-4">
+                    <button
+                      (click)="addToOrder(item)"
+                      class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
+                    >
+                      <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                  </div>
+                </ng-container>
+              </ng-template>
+            </p-card>
+          </div>
+        </ng-container>
+      </div>
+      </div>
+     
+    </ng-container>
   </div>
 
   <!-- Edit Modal -->
@@ -248,23 +328,38 @@
                       ></textarea>
                     </div>
 
+                    <!-- <mat-slide-toggle ngModel="{{item.active}}" name="active" id="active">Publish</mat-slide-toggle> -->
+                    <!-- <mat-slide-toggle [checked]="item.active" (change)="toggleActive()" id="active" -->
+                         <!-- >{{item.active}}</mat-slide-toggle> -->
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="category">Category</label>
-                        <select
-                            [(ngModel)]="item.category.cid"
-                            name="category"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="category"
-                            required
-                        >
-                            <option value="" disabled>Select a category</option>
-                            <option *ngFor="let category of categories" [value]="category.cid">{{ category.title }}</option>
-                        </select>
-                    </div>
-                    
-                    {{item | json}}
+                        <label class="block text-gray-700 font-bold mb-2" for="active">Publish Status</label>
+                        <mat-slide-toggle [(ngModel)]="item.active" name="active"></mat-slide-toggle>
+                       
+                      </div>
                       
-
+                    <div class="mb-4">
+                      <label
+                        class="block text-gray-700 font-bold mb-2"
+                        for="category"
+                        >Category</label
+                      >
+                      <select
+                        [(ngModel)]="item.category.cid"
+                        name="category"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="category"
+                        required
+                      >
+                        <option value="" disabled>Select a category</option>
+                        <option
+                          *ngFor="let category of categories"
+                          [value]="category.cid"
+                        >
+                          {{ category.title }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- {{item|json}} -->
                     <div class="bg-gray-50 px-4 py-3 flex flex-row-reverse">
                       <button
                         [disabled]="editForm.invalid"
@@ -290,6 +385,7 @@
         </div>
       </div>
     </div>
+    
   </ng-template>
 
   <!-- Delete Modal -->
@@ -376,4 +472,3 @@
     </div>
   </ng-template>
 </div>
-

@@ -1,146 +1,88 @@
-<!-- menu.component.html -->
 <div
   class="min-h-[93vh] md:min-w-screen bg-gradient-to-r from-blue-700 to-gray-800"
 >
-  <ng-container *ngIf="getRole()">
-    <div
-      class="flex justify-center fixed lg:top-[13vh] md:[12vh] sm:[10vh] left-[42px] w-full z-50 text-sm lg:text-2xl md:text-xl sm:text-lg "
-    >
-      <button
-        (click)="toggleFoodForm()"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-14 rounded"
-      >
-        As an admin, you can add new Categories
-        <i class="text-white fa fa-plus"></i>
-      </button>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="!getRole()">
-    <div
-      class="flex justify-center fixed lg:top-[12vh] md:[12vh] sm:[10vh] left-[42px] w-full z-50 text-sm lg:text-2xl md:text-xl sm:text-lg "
-    >
-      <button
-        routerLink="/category"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-14 rounded"
-      >
-        Categories
-        <i class="text-white "></i>
-      </button>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="showFoodForm">
-    <div
-      class="flex flex-col items-center justify-center px-6 py-16 lg:py-8 mx-auto md:h-screen"
-    >
-      <div
-        class="backdrop-blur-lg hover:backdrop-blur-xl w-full rounded-lg shadow-2xl md:mt-0 sm:max-w-md xl:p-0"
-      >
-        <form
-          [formGroup]="addItemForm"
-          (ngSubmit)="addCategory(addItemForm.value)"
-          class="bg-white rounded-lg p-6"
-        >
-          <div class="mb-4">
-            <label for="name" class="block text-gray-700 font-bold mb-2"
-              >Title</label
-            >
-            <input
-              type="text"
-              id="title"
-              formControlName="title"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="description" class="block text-gray-700 font-bold mb-2"
-              >Description</label
-            >
-            <textarea
-              id="description"
-              formControlName="description"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            ></textarea>
-          </div>
-         
-          <div class="flex justify-center">
-            <button
-              type="submit"
-              [disabled]="addItemForm.invalid"
-              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-            >
-              Add to categories
-              <i class="text-2xl text-white fa fa-plus"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </ng-container>
-
   <div
     class="flex p-6 pt-24 justify-center items-center"
     *ngIf="items?.length < 1"
   >
     <h2 class="text-3xl font-bold text-white mb-4 sm:mb-0">
-      No Categories added yet
+      No Items added yet
     </h2>
   </div>
-  
-  
-
+  <h1 class="text-2xl font-bold text-white bg-primary p-2 pt-10 ">
+    {{ categoryTitle }}
+  </h1>
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pt-20"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 pt-10"
     *ngIf="items?.length > 0"
   >
-    <!--<div
-      *ngFor="let item of items"
-      class="bg-white shadow-md rounded-md overflow-hidden"
-    >-->
-    <!-- [routerLink]="['/menu', item.cid]" -->
+   
     <p-card
       *ngFor="let item of items"
-      [routerLink]="['/category', item.cid]"
-      header="{{ item.title }}"
+      header="{{ item.name }}"
       styleClass="shadow-lg p-1 m-4 rounded-4 border border-primary"
       [style]="{ width: '360px', 'border-radius': '20px' }"
     >
       <ng-template pTemplate="header"> </ng-template>
+      <!-- src="https://source.unsplash.com/random/600x350/?{{ item.name }}" -->
       <p>
         <img
-        [src]="getAssetImageUrl(item.title)"
-          alt="{{ item.title }}"
+          
+          [src]="getAssetImageUrl(item.name)"
+          alt="{{ item.name }}"
           class="h-48 w-full object-cover"
         />
       </p>
       <ng-template pTemplate="footer">
-        <p class="text-gray-700 line-clamp-4">{{ item.description }}</p>
-      
+        <p class="text-gray-700">
+          <span class="font-bold">Category:</span> {{ categoryTitle }}
+        </p>
+        <p class="text-gray-700 line-clamp-2">{{ item.description }}</p>
+        <div style="font-size: 30px">
+          <h1 class="font-bold">{{ item.price | currency : "INR" }}</h1>
+        </div>
         <ng-container *ngIf="getRole()">
+    <div class="flex flex-col sm:flex-row justify-between mt-4">
+      <button
+        (click)="openEditModal(item)"
+        class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-3 rounded-full mb-2 sm:mb-0"
+      >
+        <i class="fas fa-edit"></i> Update
+      </button>
+      <button *ngIf="item.active"
+        class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
+      >
+         Active
+      </button>
+      <button
+        (click)="openDeleteModal(item)"
+        class="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-3 rounded-full"
+      >
+        <i class="fas fa-trash"></i> Delete
+      </button>
+    </div>
+  </ng-container>
+        <ng-container *ngIf="!getRole()">
           <div class="flex flex-col sm:flex-row justify-between mt-4">
             <button
-              (click)="openEditModal(item)"
+              (click)="addToOrder(item)"
               class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
             >
-              <i class="fas fa-edit"></i> Update
-            </button>
-            <button
-              (click)="openDeleteModal(item)"
-              class="bg-red-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded-full"
-            >
-              <i class="fas fa-trash"></i> Delete
+              <i class="fa fa-shopping-cart"></i> Add to Cart
             </button>
           </div>
         </ng-container>
       </ng-template>
     </p-card>
 
-    <!-- </div>-->
+    
   </div>
 
 
 
-  <!-- Edit Modal -->
-  <ng-template #editModal>
+
+   <!-- Edit Modal -->
+   <ng-template #editModal>
     <div
       class="relative z-10"
       aria-labelledby="edit-modal"
@@ -172,20 +114,20 @@
                   </h3>
                   <form
                     #editForm="ngForm"
-                    (ngSubmit)="updateCategory(editForm.value, item.cid)"
+                    (ngSubmit)="updateProduct(editForm.value, item.pid)"
                   >
                     <div class="mb-4">
                       <label
                         class="block text-gray-700 font-bold mb-2"
-                        for="title"
+                        for="name"
                       >
-                        Title
+                        Name
                       </label>
                       <input
-                        ngModel="{{ item.title}}"
-                        name="title"
+                        ngModel="{{ item.name }}"
+                        name="name"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="title"
+                        id="name"
                         type="text"
                         placeholder="Coffee"
                         required
@@ -199,7 +141,7 @@
                         Description
                       </label>
                       <input
-                        ngModel="{{item.description }}"
+                        ngModel="{{ item.description }}"
                         name="description"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="description"
@@ -208,8 +150,56 @@
                         required
                       />
                     </div>
-                    
+                    <div class="mb-4">
+                      <label
+                        class="block text-gray-700 font-bold mb-2"
+                        for="price"
+                      >
+                        Price
+                      </label>
+                      <textarea
+                        ngModel="{{ item.price }}"
+                        name="price"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="price"
+                        type="text"
+                        placeholder="Write something..."
+                        required
+                      ></textarea>
+                    </div>
 
+                    <!-- <mat-slide-toggle ngModel="{{item.active}}" name="active" id="active">Publish</mat-slide-toggle> -->
+                    <!-- <mat-slide-toggle [checked]="item.active" (change)="toggleActive()" id="active" -->
+                         <!-- >{{item.active}}</mat-slide-toggle> -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="active">Publish Status</label>
+                        <mat-slide-toggle [(ngModel)]="item.active" name="active"></mat-slide-toggle>
+                       
+                      </div>
+                      
+                    <div class="mb-4">
+                      <label
+                        class="block text-gray-700 font-bold mb-2"
+                        for="category"
+                        >Category</label
+                      >
+                      <select
+                        [(ngModel)]="item.category.cid"
+                        name="category"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="category"
+                        required
+                      >
+                        <option value="" disabled>Select a category</option>
+                        <option
+                          *ngFor="let category of categories"
+                          [value]="category.cid"
+                        >
+                          {{ category.title }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- {{item|json}} -->
                     <div class="bg-gray-50 px-4 py-3 flex flex-row-reverse">
                       <button
                         [disabled]="editForm.invalid"
@@ -235,6 +225,7 @@
         </div>
       </div>
     </div>
+    
   </ng-template>
 
   <!-- Delete Modal -->
@@ -288,8 +279,8 @@
                   </h3>
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
-                      Are you sure you want to delete this category titled "{{
-                        deleteItem.title
+                      Are you sure you want to delete this item titled "{{
+                        deleteItem.name
                       }}"? This entry can't be retrieved once it is deleted.
                     </p>
                   </div>
@@ -300,7 +291,7 @@
               class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
             >
               <button
-                (click)="deleteCategory(deleteItem.cid)"
+                (click)="deleteProduct(deleteItem.pid)"
                 type="button"
                 class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
@@ -321,5 +312,3 @@
     </div>
   </ng-template>
 </div>
-
-

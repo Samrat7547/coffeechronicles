@@ -38,6 +38,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { OrderComponent } from './pages/order/order.component';
+import { LoadProductComponent } from './pages/load-product/load-product.component';
+import { RouterModule } from '@angular/router';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -64,6 +66,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MenuComponent,
     CategoryComponent,
     OrderComponent,
+    LoadProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +91,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatProgressSpinnerModule,
     MatSelectModule,
     NgbModule,
+    RouterModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     CardModule,
     ToastrModule.forRoot({
