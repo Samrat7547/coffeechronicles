@@ -17,5 +17,38 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.text-center {
+    text-align: center;
+  }
+  .mt10 {
+    margin-top: 10px !important;
+  }
+  .mt20 {
+    margin-top: 20px !important;
+  }
+  .ml10 {
+    margin-left: 10px;
+  }
+  .ml20 {
+    margin-left: 20px;
+  }
+  .ml30 {
+    margin-left: 30px;
+  }
+  .mb10 {
+    margin-bottom: 10px;
+  }
+  /* Add this to your component's CSS file */
+  html {
+    cursor: auto !important;
+  }
+  .mb20 {
+    margin-bottom: 20px;
+  }
+  

@@ -1,7 +1,7 @@
 <nav class="bg-gray-900 shadow-lg fixed top-0 left-0 w-full z-50 py-4 lg:py-6">
-    <div class="mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-10 lg:h-12">
-        <a
+  <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-10 lg:h-12">
+      <a
         routerLink="/home"
         class="text-2xl lg:text-4xl flex items-center text-purple-500"
       >
@@ -17,55 +17,99 @@
           >Coffee Chronicles</span
         >
       </a>
-        <div class="flex items-center text-lg lg:text-xl">
-          <ng-container *ngIf="!isAuthenticated()">
-            <a
-              routerLink="/login"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium"
-            >
-              Login
-            </a>
-            <a
-              routerLink="/signup"
-              class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md font-medium ml-2 lg:ml-4"
-            >
-              Register
-            </a>
+      <div class="flex items-center text-lg lg:text-xl">
+        <ng-container *ngIf="!isAuthenticated()">
+          <a
+            routerLink="/login"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium"
+          >
+            Login
+          </a>
+          <a
+            routerLink="/signup"
+            class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md font-medium ml-2 lg:ml-4"
+          >
+            Register
+          </a>
+        </ng-container>
+
+        <!-- <div class="user-profile" (click)="toggleDropdown()">
+          <button class="user-button">
+            <i class="fa fa-user mr-2 user-name"></i>
+            <span [ngClass]="userNameClass">{{ userDetails.userName }}</span>
+          </button>
+          <div class="dropdown-content" *ngIf="showDropdown" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false">
+            <a routerLink="/your-profile" class="dropdown-item">Your Profile</a>
+            <a routerLink="/change-password" class="dropdown-item">Change Password</a>
+          </div>
+        </div> -->
+        
+
+
+        <ng-container *ngIf="isAuthenticated()" >
+          
+          <button
+            *ngIf="!getRole()"
+            (mouseclick)="menuTrigger.openMenu()"
+           
+            [matMenuTriggerFor]="userMenu"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium "
+            (mouseleave)="closeMenuOnLeave()"
+          >
+            <i class="fa fa-user mr-1"></i>
+            <ng-container *ngIf="!getRole()">
+              {{ userDetails.userName }}
+            </ng-container>
+          </button>
+          <mat-menu  #userMenu="matMenu" [class.show]="showMenu" >
+            <button mat-menu-item routerLink="/profile">Your Profile</button>
+            <button mat-menu-item routerLink="/changePassword">Change Password</button>
+          </mat-menu>
+      
+          <button
+          *ngIf="getRole()"
+          (mouseclick)="menuTrigger.openMenu()"
+         
+          [matMenuTriggerFor]="adminMenu"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium "
+          (mouseleave)="closeMenuOnLeave()"
+        >
+          <i class="fa fa-user mr-1"></i>
+          <ng-container *ngIf="getRole()">
+            ADMIN
           </ng-container>
-          <ng-container *ngIf="isAuthenticated()">
-            <button
-              *ngIf="!getRole()"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium"
-              routerLink="/user-dashboard/0"
+        </button>
+        <mat-menu  #adminMenu="matMenu" [class.show]="showMenu" >
+          <button mat-menu-item routerLink="/profile">Your Profile</button>
+          <button mat-menu-item routerLink="/manage-user">Manage Users</button>
+        </mat-menu>
+          
+         
+          <a
+            (click)="logOut()"
+            class="cursor-pointer bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md font-medium ml-2 lg:ml-4"
+          >
+            Logout
+          </a>
+        </ng-container>
+
+
+        <!-- <div class="user-profile" (click)="toggleDropdown()">
+          <button class="user-button">
+            <i class="fa fa-user mr-1 user-name"></i>
+            <span [ngClass]="userNameClass">{{ userDetails.userName }}</span>
+          </button>
+          <div class="dropdown-content" *ngIf="showDropdown">
+            <a routerLink="/your-profile" class="dropdown-item">Your Profile</a>
+            <a routerLink="/change-password" class="dropdown-item"
+              >Change Password</a
             >
-              <i class="fa fa-user mr-1"></i>
-              <ng-container *ngIf="!getRole()">
-                <!-- {{ userDetails[0].userName }} -->
-                {{ userDetails.userName }}
-              </ng-container>
-            </button>
-            <button
-              *ngIf="getRole()"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white px-2 py-1 lg:px-3 lg:py-2 rounded-md font-medium"
-              routerLink="/{{ userDetails.role }}/profile"
-            >
-              <i class="fa fa-user mr-1"></i>
-              <ng-container *ngIf="!getRole()">
-                <!-- {{ userDetails[0].userName }} -->
-                {{ userDetails.userName }}
-              </ng-container>
-              <ng-container *ngIf="getRole()"> ADMIN </ng-container>
-            </button>
-            <a
-              (click)="logOut()"
-              class="cursor-pointer bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 lg:px-4 lg:py-2 rounded-md font-medium ml-2 lg:ml-4"
-            >
-              Logout
-            </a>
-            <!-- </ng-container> -->
-          </ng-container>
-        </div>
+          </div>
+        </div> -->
+
+
+
       </div>
     </div>
-  </nav>
-  
+  </div>
+</nav>

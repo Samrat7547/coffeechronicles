@@ -1,0 +1,91 @@
+<div class="bootstrap-wrapper">
+  <div class="container-fluid">
+    <mat-card-title
+      style="
+        color: rgb(255, 0, 47);
+        margin-left: 30px;
+        margin-top: 20px;
+        font-size: 30px;
+      "
+      >All Users</mat-card-title
+    >
+    <div class="row" *ngIf="users">
+      <div class="col-md-4 mt20" *ngFor="let q of users">
+        <!-- <h3>{{q.title}}</h3> -->
+
+        <mat-card
+          style="
+            background-color: beige;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 20px;
+          "
+        >
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{ q.firstName }} {{ q.lastName }}</mat-card-title>
+            <!-- <mat-card-subtitle>
+                  <b>Username :</b> {{ q.userName }} 
+                </mat-card-subtitle> -->
+          </mat-card-header>
+
+          <mat-card-content>
+            <p class=""><b>Phone : </b>{{ q.phone }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button
+              class="ml20 mb20 mt10"
+              mat-raised-button
+              color="primary"
+              (click)="
+                openDialog(
+                  q.id,
+                  q.userName,
+                  q.firstName,
+                  q.lastName,
+                  q.email,
+                  q.phone,
+                  q.status
+                )
+              "
+            >
+              View
+            </button>
+            <button
+              class="ml20 mb20 mt10"
+              mat-raised-button
+              color="accent"
+              (click)="deleteUser(q.id)"
+            >
+              Delete
+            </button>
+            <mat-slide-toggle
+              class="ml20 mt10 mb20"
+              [color]="q.status ? 'primary' : 'warn'"
+              [(ngModel)]="q.status"
+              (change)="toggleUserStatus(q,$event)"
+            >
+              {{ q.status ? "Enabled" : "Disabled" }}
+            </mat-slide-toggle>
+            <!-- {{q.status | json}} -->
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div class="col-md-12" *ngIf="users.length == 0">
+        <mat-card>
+          <mat-card-content>
+            <h1>No users available</h1>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="flex p-6 pt-24 justify-center items-center"
+  *ngIf="users?.length < 1"
+>
+  <h2 class="text-3xl font-bold text-white mb-4 sm:mb-0">No users yet</h2>
+</div>

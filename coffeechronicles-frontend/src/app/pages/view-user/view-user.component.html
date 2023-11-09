@@ -1,0 +1,14 @@
+<mat-card class="user-card">
+    <h2>User Details</h2>
+    <p><strong>ID:</strong> {{ data.id }}</p>
+    <p><strong>User Name:</strong> {{ data.userName }}</p>
+    <p><strong>First Name:</strong> {{ data.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ data.lastName }}</p>
+    <p><strong>Email:</strong> {{ data.email }}</p>
+    <p><strong>Phone:</strong> {{ data.phone }}</p>
+    <p><strong>Status:</strong> {{ data.status }}</p>
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+      Close
+    </button>
+  </mat-card>
+  

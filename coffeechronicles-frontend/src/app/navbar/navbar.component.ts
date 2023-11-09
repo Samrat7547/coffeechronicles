@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth/auth.service';
@@ -6,6 +6,7 @@ import { SharedDataService } from '../services/sharedData/shared-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SignupComponent } from '../pages/signup/signup.component';
 import { LoginComponent } from '../pages/login/login.component';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,13 @@ import { LoginComponent } from '../pages/login/login.component';
 })
 
 export class NavbarComponent implements OnInit {
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  menuIsOpen: boolean = false;
   userDetails!: any;
+  showMenu: boolean = false;
+  userNameClass = 'user-name';
+
+
   constructor(
     private sharedDataService: SharedDataService,
     private authService: AuthService,
@@ -45,6 +52,16 @@ export class NavbarComponent implements OnInit {
     return this.authService.getRole();
   }
 
+
+  closeMenuOnLeave() {
+    if (this.menuIsOpen) {
+      this.menuTrigger.closeMenu();
+      this.menuIsOpen = false;
+    }
+  }
+
+  
+  
   
 }
 

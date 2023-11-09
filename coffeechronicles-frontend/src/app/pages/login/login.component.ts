@@ -89,9 +89,11 @@ export class LoginComponent {
         // this.router.navigate(['/home']);
       },
       (error) => {
-        this.errorMessage = 'Wrong user credentials';
+        this.errorMessage = error.error.message;
+        console.log(error);
+        
         console.log(this.errorMessage);
-        this.toastr.error('Please enter correct login credentials.');
+        this.toastr.error(this.errorMessage);
       }
     );
   }
