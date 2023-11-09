@@ -27,6 +27,30 @@ export class AuthService {
     };
     return this.http.post(`${this.baseUrl}/login`, body);
   }
+  changePassword(body:any) {
+    const token = localStorage.getItem('token');
+    
+    return this.http.post(`${this.baseUrl}/changePassword`, body,  {
+      responseType: 'text',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  update(id:number, status: string) {
+    const token = localStorage.getItem('token');
+    const body = {
+      id: id,
+      status: status,
+    };
+    return this.http.post(`${this.baseUrl}/update`, body,  {
+      responseType: 'text',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 
   logout(): void {
     localStorage.removeItem('token');

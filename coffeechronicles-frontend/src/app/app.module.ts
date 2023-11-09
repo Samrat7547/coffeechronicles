@@ -27,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { MatSelectModule } from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -40,6 +41,10 @@ import { CategoryComponent } from './pages/category/category.component';
 import { OrderComponent } from './pages/order/order.component';
 import { LoadProductComponent } from './pages/load-product/load-product.component';
 import { RouterModule } from '@angular/router';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ManageUserComponent } from './pages/manage-user/manage-user.component';
+import { ViewUserComponent } from './pages/view-user/view-user.component';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -67,6 +72,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CategoryComponent,
     OrderComponent,
     LoadProductComponent,
+    ChangePasswordComponent,
+    ProfileComponent,
+    ManageUserComponent,
+    ViewUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +91,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatTableModule,
     MatButtonModule,
     MatToolbarModule,
+    MatMenuModule,
     MatListModule,
     MatDividerModule,
     MatInputModule,

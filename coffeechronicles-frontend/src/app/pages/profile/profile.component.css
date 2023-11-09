@@ -1,0 +1,66 @@
+.profile-image{
+    max-width: 150px;
+    max-height: 150px;
+    border: 2px solid black;
+    border-radius: 50%;
+    /* justify-content: center; */
+    text-align: center;
+}
+
+
+.table{
+    width: 100%;
+    /* border: 1px solid black; */
+    /* border:.5px solid #e2e2e2; */
+    border-collapse: separate;
+    border-spacing: 0;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+.table tr td{
+    padding: 20px 220px;
+    /* border: 1px solid black; */
+}
+/* .light-theme {
+    background-color: #f5f5f5;
+  } */
+.fa {
+    margin-right: 5px;
+  }
+
+.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .update-button {
+    background-color: blue;
+    color: white;
+    transition: background-color 0.3s;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .share-button {
+    background-color: red;
+    color: white;
+    transition: background-color 0.1s;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .update-button:hover,
+.update-button:focus,
+.update-button:active {
+  background-color: darkblue;
+}
+
+.share-button:hover,
+.share-button:focus,
+.share-button:active {
+  background-color: darkred;
+}
+.min-h-screen-80 {
+  min-height: 80vh;
+}
