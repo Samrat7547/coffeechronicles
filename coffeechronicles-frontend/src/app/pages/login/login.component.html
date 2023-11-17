@@ -46,6 +46,27 @@
             </button>
            </form>
 
+           <h3 style="display: flex;justify-content: center;">OR</h3>
+  
+      <div style="display: flex; justify-content: center">
+        <asl-google-signin-button 
+          type="standard"
+          size="large"
+          
+          width="3vw"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10%;
+            width: 5vw;
+            size: large;
+          "
+        >
+        <span (click)="signInWithGoogle()">Login with Google</span>
+        </asl-google-signin-button>
+      </div>
+
            <mat-card-actions>
             <button mat-button color="accent" routerLink="/forgot"> Forgot password ? </button>
         </mat-card-actions>

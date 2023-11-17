@@ -7,6 +7,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SignupComponent } from '../pages/signup/signup.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-navbar',
@@ -28,7 +29,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private googleService: SocialAuthService,
   ) {}
   ngOnInit(): void {
     this.sharedDataService.userDetailsObservable.subscribe((userDetails: any) => {
@@ -42,10 +44,18 @@ export class NavbarComponent implements OnInit {
 
   logOut() {
     this.authService.logout();
+    
     this.sharedDataService.setUserDetails('');
     // this.sharedDataService.setUserRole('');
     this.toastr.info('You are logged out', 'Log out successful');
     this.router.navigate(['/home']);
+
+    // this.router.navigate(['/home']).then(() => {
+    
+    //   window.location.reload();
+      
+    // });
+
   }
 
   getRole() {
