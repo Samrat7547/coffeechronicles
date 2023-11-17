@@ -1,6 +1,7 @@
 package com.example.coffeechronicles.service;
 
 import com.example.coffeechronicles.entity.User;
+import com.example.coffeechronicles.wrapper.AuthenticationResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -26,4 +27,9 @@ public interface UserService {
     ResponseEntity<String> forgetPassword(Map<String, String> requestMap);
 
     ResponseEntity<String> updatePassword(Map<String, String> requestMap);
+
+    ResponseEntity<String> authenticateViaGoogle(String email);
+
+
+//    AuthenticationResponse authenticateViaGoogle(String email) throws Exception;
 }

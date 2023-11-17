@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { SharedDataService } from 'src/app/services/sharedData/shared-data.service';
 import { SignupComponent } from '../signup/signup.component';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
-   
+    private googleService: SocialAuthService,
   ) {}
   ngOnInit(): void {
     this.sharedDataService.userDetailsObservable.subscribe((userDetails) => {
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   logOut() {
     this.authService.logout();
+   
     this.sharedDataService.setUserDetails('');
     // this.sharedDataService.setUserRole('');
     this.toastr.info('You are logged out', 'Log out successful');

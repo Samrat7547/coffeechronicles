@@ -27,6 +27,15 @@ export class AuthService {
     };
     return this.http.post(`${this.baseUrl}/login`, body);
   }
+
+  sendTokenToBackend(idToken: String): Observable<any> {
+    console.log('hiii');
+
+    const url = `${this.baseUrl}/google`;
+    return this.http.post(url, idToken);
+  }
+
+
   changePassword(body:any) {
     const token = localStorage.getItem('token');
     

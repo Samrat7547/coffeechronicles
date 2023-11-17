@@ -1,7 +1,14 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtModule } from '@auth0/angular-jwt';
 import {  NgxUiLoaderModule,  NgxUiLoaderConfig,  SPINNER,  PB_DIRECTION,} from 'ngx-ui-loader';
+import {
+  SocialLoginModule,
+  GoogleSigninButtonModule,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +54,7 @@ import { ManageUserComponent } from './pages/manage-user/manage-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
 
 
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading..',
   textColor: '#FFFFFF',
@@ -58,6 +66,18 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsSize: 100,
   pbDirection: PB_DIRECTION.leftToRight,
   pbThickness: 5,
+};
+const config: SocialAuthServiceConfig = {
+  providers: [
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+
+      provider: new GoogleLoginProvider(
+        '70674515851-as87gs0v1dsuf9fsslu8on3lnd1d960j.apps.googleusercontent.com'
+      ),
+    },
+    // Add other providers as needed
+  ],
 };
 @NgModule({
   declarations: [
@@ -104,6 +124,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RouterModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     CardModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
@@ -119,7 +141,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       },
     }),
   ],
-  providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: config,
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

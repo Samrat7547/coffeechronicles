@@ -7,6 +7,7 @@ import com.example.coffeechronicles.jwt.JwtFilter;
 import com.example.coffeechronicles.jwt.JwtUtil;
 import com.example.coffeechronicles.repo.UserRepository;
 import com.example.coffeechronicles.service.UserService;
+import com.example.coffeechronicles.wrapper.AuthenticationResponse;
 import com.google.common.base.Strings;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -121,6 +122,29 @@ public class UserServiceImpl implements UserService {
                 } else {
                     return new ResponseEntity<String>("{\"message\":\"" + "Wait for admin approval" + "\"}", HttpStatus.BAD_REQUEST);
                 }
+            }
+        } catch (Exception exception) {
+            log.error("{}", exception);
+        }
+        return new ResponseEntity<String>("{\"message\":\"" + "Bad credentials" + "\"}", HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<String> authenticateViaGoogle(String googleEmail) {
+        try {
+            // Check if the email exists in the database
+            User user = userRepo.findByEmail(googleEmail);
+            if (user != null) {
+                // If the user with the Google email exists, generate a JWT token for them
+//                var jwtToken = jwtUtil.generateToken(googleEmail, "CUSTOMER");
+
+//                saveUserToken(user, jwtToken);
+//                return AuthenticationResponse.builder().token(jwtToken).build();
+                return new ResponseEntity<String>("{\"token\":\"" + jwtUtil.generateToken(googleEmail, "CUSTOMER") + "\",\"role\":\"CUSTOMER" + "\"}", HttpStatus.OK);
+            } else {
+                // Handle the case when the email does not exist in the database
+                // You can return an error response or perform other actions as needed
+                // For example, you can throw an exception, log the event, or return a specific error response.
+                throw new Exception("Email not found in the database");
             }
         } catch (Exception exception) {
             log.error("{}", exception);
