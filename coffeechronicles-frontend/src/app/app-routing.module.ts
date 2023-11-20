@@ -13,6 +13,7 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ManageUserComponent } from './pages/manage-user/manage-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
+import { authGuard } from './services/auth.guard';
 
 
 const routes: Routes = [
@@ -21,11 +22,11 @@ const routes: Routes = [
   { path:'signup', component: SignupComponent,pathMatch: 'full'},
   { path:'login',component: LoginComponent, pathMatch: 'full' },
   { path:'forgot',component: ForgotPasswordComponent, pathMatch: 'full' },
-  { path:'dashboard',component: DashboardComponent, pathMatch: 'full' },
-  {path: 'category',component: CategoryComponent,pathMatch: 'full'},
-  { path:'menu',component: MenuComponent, pathMatch: 'full' },
+  { path:'dashboard',component: DashboardComponent, pathMatch: 'full', canActivate: [authGuard] },
+  {path: 'category',component: CategoryComponent,pathMatch: 'full', canActivate: [authGuard] },
+  { path:'menu',component: MenuComponent, pathMatch: 'full' , canActivate: [authGuard] },
   { path: 'menu/:cid', component: MenuComponent },
-  { path:'order',component: OrderComponent, pathMatch:'full'},
+  { path:'order',component: OrderComponent, pathMatch:'full', canActivate: [authGuard] },
   { path: 'category/:cid', component: LoadProductComponent },
   { path:'changePassword', component:ChangePasswordComponent},
   { path: 'profile', component: ProfileComponent},
