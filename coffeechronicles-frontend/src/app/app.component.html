@@ -83,6 +83,57 @@
             <router-outlet class="w-full"></router-outlet>
           </div>
         </div>
+
+        <footer class="bg-gray-900 text-gray-500">
+          <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-wrap">
+            <div class="w-full md:w-1/3 lg:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-lg font-medium mb-4">Connect with us</h3>
+              <div class="flex">
+                <a href="#" class="text-gray-500 hover:text-white mr-4">
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-white mr-4">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-white">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-lg font-medium mb-4">Address</h3>
+              <p class="text-gray-500">123 Main Street</p>
+              <p class="text-gray-500">Anytown, India 123456</p>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-lg font-medium mb-4">Phone Numbers</h3>
+              <p class="text-gray-500">Main: (+91) 55555-55555</p>
+              <p class="text-gray-500">Fax: (+91) 77777-77777</p>
+            </div>
+            <div class="w-full md:w-1/3 lg:w-1/4 mb-4 md:mb-0">
+              <h3 class="text-lg font-medium mb-4">Subscribe</h3>
+              <form class="flex flex-col">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  class="py-2 px-3 rounded-lg mb-2 bg-gray-800 text-gray-500"
+                />
+                <button
+                  type="submit"
+                  class="py-2 px-4 bg-purple-500 hover:bg-purple-600 rounded-lg text-white font-medium"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="border-t border-gray-800 py-4 px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500">
+              &copy; 2023 Coffee Chronicles. All rights reserved.
+            </p>
+          </div>
+        </footer>
+
       </div>
     </ng-container>
     <ng-container *ngIf="!isAuthenticated()">
