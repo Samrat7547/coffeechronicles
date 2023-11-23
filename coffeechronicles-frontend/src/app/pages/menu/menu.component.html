@@ -183,6 +183,11 @@
               header="{{ item.name }}"
               styleClass="shadow-lg p-1 m-4 rounded-4 border border-primary"
               [style]="{ width: '360px', 'border-radius': '20px' }"
+              (click)="
+                openDialog(
+                 item.name,category.title,item.description,item.price
+                )
+              "
             >
               <ng-template pTemplate="header"> </ng-template>
               <p>

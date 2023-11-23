@@ -1,6 +1,7 @@
 package com.example.coffeechronicles.serivceImpl;
 
 import com.example.coffeechronicles.entity.Bill;
+import com.example.coffeechronicles.entity.TransactionDetails;
 import com.example.coffeechronicles.jwt.JwtFilter;
 import com.example.coffeechronicles.repo.BillRepo;
 import com.example.coffeechronicles.service.BillService;
@@ -9,11 +10,14 @@ import com.google.gson.reflect.TypeToken;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +44,10 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     private JwtFilter jwtFilter;
+
+    private static final String KEY="rzp_test_S2pk7BAUZxcuzg";
+    private static final String KEY_SECRET="1IOQQNml0TCxT5lsXE3XwI8k";
+    private static final String CURRENCY="INR";
 
     public final String STORE_LOCATION="/home/samrat/Bills";
 
@@ -147,6 +155,27 @@ public class BillServiceImpl implements BillService {
             ex.printStackTrace();
         }
         return new ResponseEntity<>(bills, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> delete(Integer id) {
+        try {
+            if (jwtFilter.isAdmin()) {
+                Optional optional = billRepo.findById(id);
+                if (!optional.isEmpty()) {
+                    billRepo.deleteById(id);
+                    //System.out.println("Product is deleted successfully");
+                    return new ResponseEntity<>("Bill is deleted successfully", HttpStatus.OK);
+                }
+                //System.out.println("Product id doesn't exist");
+                return new ResponseEntity<>("Bill id doesn't exist", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("UNAUTHORIZED_ACCESS", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -302,5 +331,33 @@ public class BillServiceImpl implements BillService {
 
         table.addCell(String.valueOf(price));
         table.addCell(String.valueOf(total));
+    }
+
+
+    //transaction-razorpay
+    public TransactionDetails createTransaction(Double amount) {
+        try {
+            JSONObject jsonObject= new JSONObject();
+            jsonObject.put("amount",(amount*100));
+            jsonObject.put("currency",CURRENCY);
+            RazorpayClient razorpayClient = new RazorpayClient(KEY, KEY_SECRET);
+
+            Order order = razorpayClient.orders.create(jsonObject);
+            TransactionDetails transactionDetails= prepareTransaction(order);
+            return transactionDetails;
+//            return prepareTransaction(order);
+//            System.out.println(order);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return  null;
+    }
+    private TransactionDetails prepareTransaction(Order order){
+        String orderId= order.get("id");
+        String currency=order.get("currency");
+        Integer amount= order.get("amount");
+
+        TransactionDetails transactionDetails= new TransactionDetails(orderId,currency,amount,KEY);
+        return transactionDetails;
     }
 }

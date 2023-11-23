@@ -1,0 +1,16 @@
+<mat-card class="user-card">
+    <div class="mb-5">
+    <h2>Product Details</h2>
+</div >
+<div class="text-left">
+    <p><strong>Name:</strong> {{ data.name }}</p>
+    
+    <p><strong>Category:</strong> {{ data.title }}</p>
+    <p><strong>Description:</strong> {{ data.description}}</p>
+    <p><strong>Price:</strong> {{ data.price  | currency : "INR"}}</p>
+</div>
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+      Close
+    </button>
+  </mat-card>
+  

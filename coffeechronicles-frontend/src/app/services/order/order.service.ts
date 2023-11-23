@@ -17,6 +17,15 @@ export class OrderService {
     return this.orderDataSubject.asObservable();
   }
 
+  createTransaction(amount:any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.baseUrl}/transaction/${amount}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   addToOrder(orderItem: Order) {
     this.orderData.push(orderItem);
     this.orderDataSubject.next(this.orderData);
@@ -35,6 +44,15 @@ export class OrderService {
   getAllBills(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(`${this.baseUrl}/get`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  deleteBill(id: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${this.baseUrl}/delete/${id}`, {
+      responseType: 'text',
       headers: {
         Authorization: `Bearer ${token}`,
       },

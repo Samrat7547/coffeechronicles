@@ -38,7 +38,7 @@
   .stylish-title {
     font-size: 48px; /* Increase the title font size */
     font-weight: bold;
-    margin-left: 400px;
+    /* margin-left: 400px; */
     /* Set a custom color */
     color: #007bff; 
   }
@@ -55,6 +55,8 @@
     display: flex;
     align-items: center;
     width: 100%;
+    margin-bottom: 40px;
+    margin-left: 60px;
   }
   
   .circle {
@@ -69,11 +71,12 @@
     margin-right: 50px;
     margin-left: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;;
   }
   
   .circle img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 200px;
+    max-height: 200px;
     border-radius: 50%;
   }
   .join-button {
@@ -94,7 +97,9 @@
   
   
   .info {
-    flex: 1;
+    /* flex: 1; */
+    flex:2;
+    padding: 0 20px;
   }
   
   .item-title {
@@ -107,8 +112,9 @@
   .item-description {
     font-size: 16px;
     color: #555;
-    margin-top: 20px;
+    margin-top: 30px;
     line-height: 1.4; /* Adjust line height for better readability */
+    margin-left: 20px;
   }
   
   .section-heading {

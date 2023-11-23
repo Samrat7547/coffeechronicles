@@ -1,64 +1,63 @@
-<div class="min-h-screen bg-gradient-to-r from-purple-500 to-blue-500">
-    <!-- <mat-card *ngIf="user" class="min-h-screen-80"> -->
-        <!-- <mat-action-list> -->
-      
-        
-      
-        <!-- {{user | json}} -->
-        <!-- <h3>Your Profile Details</h3> -->
-        <mat-card-content>
-          <div class="bootstrap-wrapper pt-20">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- <div class="container text-center"> -->
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnyuq5iI30Yo3TwJF-Sr5PJz0KZLImVddlRw&usqp=CAU"
-                    alt="Profile Pic"
-                    class="profile-image mx-auto d-block"
-                  />
-                  <h1 class="mt-2 text-center">
-                    <b>{{ user.firstName }} {{ user.lastName }}</b>
-                  </h1>
-                  <!-- </div> -->
-                </div>
-              </div>
-      
-              <div class="row ml-14">
-                <div class="col-md-10 offset-md-1 ml-4">
-                  <!-- //Table Details -->
-                  <table class="table light-theme">
-                    <tr>
-                      <td><i class="fa fa-user-circle"></i>Username</td>
-                      <td>{{ user.userName }}</td>
-                    </tr>
-                    <tr>
-                      <td><i class="fa fa-id-badge" aria-hidden="true"></i>Userid</td>
-                      <td>{{ user.id }}</td>
-                    </tr>
-                    <tr>
-                      <td><i class="fa fa-phone-square"></i>Phone</td>
-                      <td>{{ user.phone }}</td>
-                    </tr>
-                    <tr>
-                      <td><i class="fa fa-user-plus" aria-hidden="true"></i>Role</td>
-                      <td>{{ user.role }}</td>
-                    </tr>
-                    <tr>
-                      <td><i class="fa fa-envelope" aria-hidden="true"></i>Email</td>
-                      <td>{{ user.email }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
+<mat-card *ngIf="user" class="min-h-screen-80">
+  <!-- <mat-action-list> -->
+
+  <mat-card-title style="color: red; margin-left: 20px; margin-top: 20px"
+    >Your Profile Details</mat-card-title
+  >
+
+  <!-- {{user | json}} -->
+  <!-- <h3>Your Profile Details</h3> -->
+  <mat-card-content>
+    <div class="bootstrap-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- <div class="container text-center"> -->
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnyuq5iI30Yo3TwJF-Sr5PJz0KZLImVddlRw&usqp=CAU"
+              alt="Profile Pic"
+              class="profile-image mx-auto d-block"
+            />
+            <h1 class="mt-2 text-center">
+              {{ user.firstName }} {{ user.lastName }}
+            </h1>
+            <!-- </div> -->
           </div>
-        </mat-card-content>
-        <!-- <mat-card-actions class="text-center">
-              <button mat-button class="update-button">UPDATE</button>
-              <button mat-button class="share-button">SHARE</button>
-            </mat-card-actions> -->
-        <!-- </mat-action-list> -->
-      <!-- </mat-card> -->
-      
-</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10 offset-md-3">
+            <!-- //Table Details -->
+            <table class="table light-theme">
+              <tr>
+                <td><i class="fa fa-user-circle"></i>Username</td>
+                <td>{{ user.userName }}</td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-id-badge" aria-hidden="true"></i>Userid</td>
+                <td>{{ user.id }}</td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-phone-square"></i>Phone</td>
+                <td>{{ user.phone }}</td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-user-plus" aria-hidden="true"></i>Role</td>
+                <td>{{ user.role }}</td>
+              </tr>
+              <tr>
+                <td><i class="fa fa-envelope" aria-hidden="true"></i>Email</td>
+                <td>{{ user.email }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <!-- <mat-card-actions class="text-center">
+        <button mat-button class="update-button">UPDATE</button>
+        <button mat-button class="share-button">SHARE</button>
+      </mat-card-actions> -->
+  <!-- </mat-action-list> -->
+</mat-card>
