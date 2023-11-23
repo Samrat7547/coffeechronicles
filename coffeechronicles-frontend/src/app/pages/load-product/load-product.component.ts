@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -8,6 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { MenuService } from 'src/app/services/menu/menu.service';
 import { OrderService } from 'src/app/services/order/order.service';
+import { ViewmenuComponent } from 'src/app/viewmenu/viewmenu.component';
 
 @Component({
   selector: 'app-load-product',
@@ -28,7 +30,7 @@ export class LoadProductComponent implements OnInit {
 
   constructor(private route:ActivatedRoute, private authService:AuthService, private menuService: MenuService,
     private toastr:ToastrService, private orderService:OrderService, private modalService: NgbModal,
-    private categoryService:CategoryService){
+    private categoryService:CategoryService, private dialog:MatDialog){
 
   }
   ngOnInit(): void {
@@ -185,5 +187,24 @@ export class LoadProductComponent implements OnInit {
     const imageUrl = `assets/${imageName}`;
   
     return imageUrl;
+  }
+  openDialog(
+    name: any,
+    title: any,
+    description: any,
+    price: any,
+  ) {
+    const dialogRef = this.dialog.open(ViewmenuComponent, {
+      data: {
+        name: name,
+        title: title,
+        description: description,
+        price: price,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

@@ -1,6 +1,7 @@
 package com.example.coffeechronicles.controller;
 
 import com.example.coffeechronicles.entity.Bill;
+import com.example.coffeechronicles.entity.TransactionDetails;
 import com.example.coffeechronicles.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,19 @@ public class BillController {
             ex.printStackTrace();
         }
         return null;
+    }
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteBill(@PathVariable("id") Integer id){
+        try {
+            return billService.delete(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping(path = "/transaction/{amount}")
+    public TransactionDetails createTransaction(@PathVariable(name = "amount")Double amount){
+        return billService.createTransaction(amount);
     }
 }

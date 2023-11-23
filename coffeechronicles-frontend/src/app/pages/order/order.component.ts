@@ -1,7 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+// import * as Razorpay from 'razorpay';
+
 import Order from 'src/app/model/Order';
 import Orders from 'src/app/model/Orders';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -9,6 +12,7 @@ import { MenuService } from 'src/app/services/menu/menu.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { SharedDataService } from 'src/app/services/sharedData/shared-data.service';
 
+declare var Razorpay:any;
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -28,7 +32,8 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private sharedDataService: SharedDataService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -180,23 +185,69 @@ export class OrderComponent implements OnInit {
         totalAmount: this.calculateSubtotal().toString(),
       };
       console.log(orders);
-      this.order = [];
-      this.newOrderForm = this.fb.group({
-        food: [''],
-        quantity: [''],
-        orderType: ['', Validators.required],
-        paymentMethod: ['', Validators.required],
-      });
-      this.orderService.addBill(orders).subscribe(
+      // this.order = [];
+      // this.newOrderForm = this.fb.group({
+      //   food: [''],
+      //   quantity: [''],
+      //   orderType: ['', Validators.required],
+      //   paymentMethod: ['', Validators.required],
+      // });
+      // this.orderService.addBill(orders).subscribe(
+      //   (res: any) => {
+      //     this.toastr.success('Your order is placed!', 'Order successful');
+      //     console.log(res);
+      //   },
+      //   (error: HttpErrorResponse) => {
+      //     this.toastr.success('Your order is placed!', 'Order successful');
+      //     console.log(error);
+      //   }
+      // );
+      // console.log(orders.totalAmount);
+      if (this.selectedPaymentMethod === 'credit card' || this.selectedPaymentMethod === 'debit card') {
+        let amount= parseFloat(orders.totalAmount);
+        
+        this.orderService.createTransaction(amount).subscribe(
+            (response)=>{
+              console.log(response);
+              this.openTransactionModal(response);
+
+            },
+            (error)=>{
+              console.log(error);
+              
+            }
+        );
+        
+      }
+      else{
+        console.log("bad");
+        this.order = [];
+        this.newOrderForm = this.fb.group({
+          food: [''],
+          quantity: [''],
+          orderType: ['', Validators.required],
+          paymentMethod: ['', Validators.required],
+        });
+        this.orderService.addBill(orders).subscribe(
         (res: any) => {
           this.toastr.success('Your order is placed!', 'Order successful');
           console.log(res);
+          this.router.navigate(['/order']);
+
+          // Reload the window after 2 seconds
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 2000);
+         
         },
         (error: HttpErrorResponse) => {
           this.toastr.success('Your order is placed!', 'Order successful');
           console.log(error);
         }
       );
+      }
+
+
     }
   }
 
@@ -210,6 +261,87 @@ export class OrderComponent implements OnInit {
         console.log(error.message);
       }
     );
+  }
+
+  openTransactionModal(response:any){
+    var options={
+      order_id:response.orderId,
+      key:response.key,
+      amount:response.amount,
+      currency:response.currency,
+      name:`${this.userDetails.firstName} ${this.userDetails.lastName}`,
+      description: 'Coffee Chronicles',
+      image: 'https://cdn.pixabay.com/photo/2016/09/05/18/49/plastic-card-1647376_640.jpg',
+      handler:(response:any)=>{
+        // this.processResponse(response);
+        if(response!= null && response.razorpay_payment_id != null) {
+          this.processResponse(response);
+          console.log("done");
+
+         
+          
+            console.log(this.order);
+            const orders: Orders = {
+              createdBy: this.userDetails.userName.toString(),
+              email: this.userDetails.email.toString(),
+              // firstName: this.userDetails.firstName.toString(),
+              // lastName: this.userDetails.lastName.toString(),
+              name: `${this.userDetails.firstName} ${this.userDetails.lastName}`,
+              contactNumber:this.userDetails.phone.toString(),
+              orderType: this.selectedOrderType.toString(),
+              paymentMethod: this.selectedPaymentMethod.toString(),
+              productDetail: JSON.stringify(this.order),
+              totalAmount: this.calculateSubtotal().toString(),
+            };
+            console.log(orders);
+            
+            this.orderService.addBill(orders).subscribe(
+              (res: any) => {
+                this.toastr.success('Your order is placed!', 'Order successful');
+                this.order = [];
+            this.newOrderForm = this.fb.group({
+              food: [''],
+              quantity: [''],
+              orderType: ['', Validators.required],
+              paymentMethod: ['', Validators.required],
+            });
+                console.log(res);
+                // setTimeout(() => {
+                //   window.location.reload();
+                // }, 3000);
+              },
+              (error: HttpErrorResponse) => {
+                this.toastr.success('Your order is placed!', 'Order successful');
+                console.log(error);
+              }
+            );
+          
+          
+        } else {
+          this.toastr.error('Error', 'Payment Failed!!');
+          console.log("error");
+          
+        }
+       
+      },
+      prefill: {
+        name:`${this.userDetails.firstName} ${this.userDetails.lastName}`,
+        email: this.userDetails.email.toString(),
+        contact:this.userDetails.phone.toString(),
+      },
+      notes:{
+        address:'',
+
+      },
+      theme:{
+        color:'#F37254'
+      }
+    };
+    var razorPayObject= new Razorpay(options);
+    razorPayObject.open();
+  }
+  processResponse(resp:any){
+    console.log(resp);
   }
 }
 

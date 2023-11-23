@@ -33,6 +33,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -52,6 +53,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ManageUserComponent } from './pages/manage-user/manage-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
+import { ViewbillproductsComponent } from './viewbillproducts/viewbillproducts.component';
+import { ViewmenuComponent } from './viewmenu/viewmenu.component';
 
 
 
@@ -96,6 +99,8 @@ const config: SocialAuthServiceConfig = {
     ProfileComponent,
     ManageUserComponent,
     ViewUserComponent,
+    ViewbillproductsComponent,
+    ViewmenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,6 +120,7 @@ const config: SocialAuthServiceConfig = {
     MatListModule,
     MatDividerModule,
     MatInputModule,
+    MatSnackBarModule,
     MatDialogModule,
     MatRadioModule,
     MatSlideToggleModule,

@@ -13,6 +13,7 @@ import {
 
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +23,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { MenuService } from 'src/app/services/menu/menu.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { SharedDataService } from 'src/app/services/sharedData/shared-data.service';
+import { ViewmenuComponent } from 'src/app/viewmenu/viewmenu.component';
 
 @Component({
   selector: 'app-menu',
@@ -57,7 +59,8 @@ export class MenuComponent implements OnInit{
     private orderService: OrderService,
     private route: ActivatedRoute,
     private renderer: Renderer2,
-    private sharedData: SharedDataService
+    private sharedData: SharedDataService,
+    public dialog: MatDialog,
   ) {}
   ngOnInit(): void {
     this.addItemForm = this.fb.group({
@@ -74,51 +77,6 @@ export class MenuComponent implements OnInit{
 
    
   }
-  // ngAfterViewInit(): void {
-    
-  //   this.getAll();
-  //   this.route.params.subscribe((params) => {
-  //     const cid = params['cid'];
-  //     this.categoryId = cid;
-  //     if (cid) {
-  //       this.categoryContainers.changes.subscribe(
-  //         (containers: QueryList<ElementRef>) => {
-  //           // categoryContainers are now populated
-  //           if (containers && containers.length > 0) {
-  //             // Now you can scroll to a specific category by its index
-              
-  //             this.scrollToCategory(this.categoryId);
-  //           }
-  //         }
-  //       );
-  //     }
-  //   });
-  // }
-
- 
-  // scrollToCategory(cid: number) {
-  //   // this.getProducts();
-  //   // this.getAll();
-  //   console.log(cid);
-    
-  //   console.log(this.categoryContainers);
-    
-  //   if (this.categoryContainers) {
-  //     const categoryContainer = this.categoryContainers.find(
-  //       (container) => container.nativeElement.id === 'category-' + cid
-  //     );
-  // console.log(categoryContainer);
-  
-  //     if (categoryContainer) {
-  //       console.log(categoryContainer.nativeElement.id);
-  //       const yOffset = categoryContainer.nativeElement.getBoundingClientRect().top;
-  //       const yOffsetAdjusted = yOffset + window.scrollY;
-  // console.log(yOffsetAdjusted);
-  
-  //       window.scrollTo({ top: yOffsetAdjusted, behavior: 'smooth' });
-  //     }
-  //   }
-  // }
   
   
   
@@ -130,18 +88,7 @@ export class MenuComponent implements OnInit{
   getRole(): boolean {
     return this.authService.getRole();
   }
-  // getProducts() {
-  //   this.menuService.getProducts().subscribe(
-  //     (res: any) => {
-  //       console.log(res);
-  //       this.items = res;
-  //       // this.scrollToCategory(this.categoryId);
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message);
-  //     }
-  //   );
-  // }
+ 
 
   getAll(){
     this.categoryService.getCategories().subscribe(
@@ -327,6 +274,26 @@ export class MenuComponent implements OnInit{
     const imageUrl = `assets/${imageName}`;
   
     return imageUrl;
+  }
+
+  openDialog(
+    name: any,
+    title: any,
+    description: any,
+    price: any,
+  ) {
+    const dialogRef = this.dialog.open(ViewmenuComponent, {
+      data: {
+        name: name,
+        title: title,
+        description: description,
+        price: price,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   
