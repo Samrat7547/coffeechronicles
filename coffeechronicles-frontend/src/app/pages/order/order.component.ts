@@ -117,9 +117,11 @@ export class OrderComponent implements OnInit {
   // }
   addFood() {
     const currentOrder = this.newOrderForm.value;
-    if (currentOrder.food != '') {
+    if (currentOrder.food != '' ) {
       // If quantity is not provided or less than 1, set it to 1
-      let quantity = currentOrder.quantity ? parseInt(currentOrder.quantity) : 1;
+      // let quantity = currentOrder.quantity ? parseInt(currentOrder.quantity) : 1;
+      let quantity = currentOrder.quantity ? Math.max(1, parseInt(currentOrder.quantity)) : 1;
+
   
       this.newOrderForm = this.fb.group({
         food: [''],
