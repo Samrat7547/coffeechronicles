@@ -32,7 +32,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
@@ -55,6 +55,7 @@ import { ManageUserComponent } from './pages/manage-user/manage-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { ViewbillproductsComponent } from './viewbillproducts/viewbillproducts.component';
 import { ViewmenuComponent } from './viewmenu/viewmenu.component';
+import { RatereviewComponent } from './ratereview/ratereview.component';
 
 
 
@@ -101,6 +102,7 @@ const config: SocialAuthServiceConfig = {
     ViewUserComponent,
     ViewbillproductsComponent,
     ViewmenuComponent,
+    RatereviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,6 +123,7 @@ const config: SocialAuthServiceConfig = {
     MatDividerModule,
     MatInputModule,
     MatSnackBarModule,
+    MatTooltipModule,
     MatDialogModule,
     MatRadioModule,
     MatSlideToggleModule,

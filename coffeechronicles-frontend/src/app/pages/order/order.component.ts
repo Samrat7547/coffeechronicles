@@ -77,44 +77,7 @@ export class OrderComponent implements OnInit {
     this.order.splice(index, 1);
   }
 
-  // addFood() {
-  //   const currentOrder = this.newOrderForm.value;
-  //   if (currentOrder.food != '' && currentOrder.quantity != '') {
-  //     if (parseInt(currentOrder.quantity) < 1) {
-  //       this.toastr.warning(
-  //         'Number of items must be at least one',
-  //         'Invalid quantity'
-  //       );
-  //     } else {
-  //       this.newOrderForm = this.fb.group({
-  //         food: [''],
-  //         quantity: [''],
-  //         orderType: [this.selectedOrderType, Validators.required],
-  //         paymentMethod: [this.selectedPaymentMethod, Validators.required],
-  //       });
 
-  //       const foodAndPrice = currentOrder.food;
-  //       const [food, pr] = foodAndPrice.split(' - ');
-  //       const price = parseFloat(pr).toFixed(2);
-  //       const quantity = currentOrder.quantity;
-  //       const singleOrder: Order = {
-  //         name: food,
-  //         price: price.toString(),
-  //         quantity: quantity.toString(),
-  //         total: (parseFloat(price) * quantity).toFixed(2),
-  //       };
-  //       this.order.push(singleOrder);
-        
-  //     }
-      
-  //   } else {
-  //     this.toastr.warning(
-  //       'Please choose both food option and the quantity',
-  //       'Invalid item'
-  //     );
-  //   }
-    
-  // }
   addFood() {
     const currentOrder = this.newOrderForm.value;
     if (currentOrder.food != '' ) {
@@ -131,15 +94,20 @@ export class OrderComponent implements OnInit {
       });
   
       const foodAndPrice = currentOrder.food;
-      const [food, pr] = foodAndPrice.split(' - ');
+      const [food, pr,pid] = foodAndPrice.split(' - ');
       const price = parseFloat(pr).toFixed(2);
+      // const pid=
       
       const singleOrder: Order = {
+        pid:pid,
         name: food,
         price: price.toString(),
         quantity: quantity.toString(),
         total: (parseFloat(price) * quantity).toFixed(2),
       };
+      console.log("HEllo");
+      
+      console.log(singleOrder);
       
       this.order.push(singleOrder);
     } else {

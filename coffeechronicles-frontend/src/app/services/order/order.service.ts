@@ -58,4 +58,17 @@ export class OrderService {
       },
     });
   }
+  update(id:number, active: boolean) {
+    const token = localStorage.getItem('token');
+    const body = {
+      id: id,
+      active:active
+    };
+    return this.http.post(`${this.baseUrl}/update`, body,  {
+      responseType: 'text',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

@@ -1,4 +1,4 @@
-<mat-card class="user-card">
+<mat-card class="user-card ">
     <div class="mb-5">
     <h2>Product Details</h2>
 </div >
@@ -9,8 +9,43 @@
     <p><strong>Description:</strong> {{ data.description}}</p>
     <p><strong>Price:</strong> {{ data.price  | currency : "INR"}}</p>
 </div>
-    <button mat-raised-button color="primary" (click)="closeDialog()">
+    <!-- <button mat-raised-button color="primary" (click)="closeDialog()">
       Close
-    </button>
+    </button> -->
   </mat-card>
+  <div class="responsive_table mb-20 mr-5 ml-5 user-card ">
+    <div class="mb-5">
+      <h2>All Reviews</h2>
+  </div >
+  <div>
+    <table mat-table [dataSource]="this.reviews" class="mat-elevation-z8 mat-dialog-content">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
   
+        <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef>Rating</th>
+            <td mat-cell *matCellDef="let element">{{element.rating}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="review">
+            <th mat-header-cell *matHeaderCellDef>Review</th>
+            <td mat-cell *matCellDef="let element">{{element.review}}</td>
+        </ng-container>
+  
+        
+  
+        
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row;columns:displayedColumns;"></tr>
+  
+    </table>
+  </div>
+    
+  </div>
+  <div style="text-align: center;">
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+    Close
+  </button></div>

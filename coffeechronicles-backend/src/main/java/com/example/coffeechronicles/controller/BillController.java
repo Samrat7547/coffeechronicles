@@ -1,6 +1,7 @@
 package com.example.coffeechronicles.controller;
 
 import com.example.coffeechronicles.entity.Bill;
+import com.example.coffeechronicles.entity.Product;
 import com.example.coffeechronicles.entity.TransactionDetails;
 import com.example.coffeechronicles.service.BillService;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +66,14 @@ public class BillController {
     @GetMapping(path = "/transaction/{amount}")
     public TransactionDetails createTransaction(@PathVariable(name = "amount")Double amount){
         return billService.createTransaction(amount);
+    }
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@RequestBody Map<String, String> requestMap) {
+        try {
+            return billService.update(requestMap);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

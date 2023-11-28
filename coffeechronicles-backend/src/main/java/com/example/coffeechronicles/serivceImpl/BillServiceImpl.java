@@ -1,7 +1,9 @@
 package com.example.coffeechronicles.serivceImpl;
 
 import com.example.coffeechronicles.entity.Bill;
+import com.example.coffeechronicles.entity.Product;
 import com.example.coffeechronicles.entity.TransactionDetails;
+import com.example.coffeechronicles.entity.User;
 import com.example.coffeechronicles.jwt.JwtFilter;
 import com.example.coffeechronicles.repo.BillRepo;
 import com.example.coffeechronicles.service.BillService;
@@ -359,5 +361,29 @@ public class BillServiceImpl implements BillService {
 
         TransactionDetails transactionDetails= new TransactionDetails(orderId,currency,amount,KEY);
         return transactionDetails;
+    }
+
+    @Override
+    public ResponseEntity<String> update(Map<String, String> requestMap) {
+        try {
+            if (jwtFilter.isUser()) {
+                Optional<Bill> optional = billRepo.findById(Integer.parseInt(requestMap.get("id")));
+                if (!optional.isEmpty()) {
+
+                    billRepo.updateActive(Boolean.parseBoolean(requestMap.get("active")), Integer.parseInt(requestMap.get("id")));
+
+                    return new ResponseEntity<>("Bill Status is updated Successfully", HttpStatus.OK);
+
+                } else {
+                    return new ResponseEntity<>("Bill id doesn't exist", HttpStatus.OK);
+                }
+            } else {
+                return new ResponseEntity<>("UNAUTHORIZED_ACCESS", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("SOMETHING_WENT_WRONG", HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 }

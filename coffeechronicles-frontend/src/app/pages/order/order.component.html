@@ -29,7 +29,7 @@
               <option value="" disabled selected>Select food</option>
               <option
                 *ngFor="let item of items"
-                [value]="item.name + ' - ' + item.price"
+                [value]="item.name + ' - ' + item.price + ' - ' + item.pid"
               >
                 {{ item.name }} (₹{{ item.price }})
               </option>

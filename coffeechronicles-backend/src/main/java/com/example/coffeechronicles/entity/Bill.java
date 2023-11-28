@@ -25,4 +25,5 @@ public class Bill {
     @Column( columnDefinition = "json")
     private String productDetail;
     private String createdBy;
+    private boolean active = true;
 }

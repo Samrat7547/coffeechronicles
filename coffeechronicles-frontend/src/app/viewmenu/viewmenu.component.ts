@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ViewUserComponent } from '../pages/view-user/view-user.component';
 import { AuthService } from '../services/auth/auth.service';
+import { ReviewService } from '../services/review/review.service';
 
 @Component({
   selector: 'app-viewmenu',
@@ -13,11 +14,14 @@ import { AuthService } from '../services/auth/auth.service';
 export class ViewmenuComponent {
 
   user!: any;
-
+  displayedColumns:string[]=['name','rating','review'];
+  reviews: any;
+  
   
   constructor(
     private _route: ActivatedRoute,
     private auth: AuthService,
+    private reviewService:ReviewService,
     private toastr: ToastrService,
     private router: Router,
     private dialogRef: MatDialogRef<ViewmenuComponent>,
@@ -29,20 +33,23 @@ export class ViewmenuComponent {
       data.title,
       data.description,
       data.price,
+      data.pid
     );
   }
   ngOnInit(): void {
-    // this._quiz.getQuiz(this.qid).subscribe(
-    // this.auth.(this.qid).subscribe(
-    //     (data:any)=>{
-    //       console.log(data);
-    //       this.quiz=data;
-    //     },
-    //     (error)=>{
-    //       console.log(error);
-    //       this.toastr.error('Error!!','Error in Loading');
-    //     }
-    //   )
+    // console.log(this.data);
+    this.reviewService.getReviewOfProducts(this.data.pid).subscribe(
+      (data: any) => {
+        
+         this.reviews=data;
+         console.log(this.reviews);
+         
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error('Error', 'Server error');
+      }
+    );
   }
   closeDialog() {
     // Close the dialog when the close button is clicked
