@@ -247,6 +247,7 @@ export class MenuComponent implements OnInit{
     // Add the item to the order using the service
 
     const singleOrder: Order = {
+      pid:item.pid,
       name: item.name,
       price: item.price.toString(),
       quantity: '1',
@@ -281,6 +282,7 @@ export class MenuComponent implements OnInit{
     title: any,
     description: any,
     price: any,
+    pid:any
   ) {
     const dialogRef = this.dialog.open(ViewmenuComponent, {
       data: {
@@ -288,6 +290,7 @@ export class MenuComponent implements OnInit{
         title: title,
         description: description,
         price: price,
+        pid:pid
       },
     });
 

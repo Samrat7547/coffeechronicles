@@ -1,4 +1,5 @@
 export default interface Order {
+  pid:number;
     name: string;
     price: string;
     quantity: string;

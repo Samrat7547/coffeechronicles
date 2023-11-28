@@ -103,6 +103,7 @@ export class LoadProductComponent implements OnInit {
     // Add the item to the order using the service
 
     const singleOrder: Order = {
+      pid:item.pid,
       name: item.name,
       price: item.price.toString(),
       quantity: '1',

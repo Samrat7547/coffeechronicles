@@ -22,11 +22,7 @@
       header="{{ item.name }}"
       styleClass="shadow-lg p-1 m-4 rounded-4 border border-primary"
       [style]="{ width: '360px', 'border-radius': '20px' }"
-      (click)="
-                openDialog(
-                 item.name,categoryTitle,item.description,item.price
-                )
-              "
+      
     >
       <ng-template pTemplate="header"> </ng-template>
       <!-- src="https://source.unsplash.com/random/600x350/?{{ item.name }}" -->
@@ -67,16 +63,28 @@
       </button>
     </div>
   </ng-container>
-        <ng-container *ngIf="!getRole()">
-          <div class="flex flex-col sm:flex-row justify-between mt-4">
-            <button
-              (click)="addToOrder(item)"
-              class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
-            >
-              <i class="fa fa-shopping-cart"></i> Add to Cart
-            </button>
-          </div>
-        </ng-container>
+  <ng-container *ngIf="!getRole()">
+    <div class="flex flex-col sm:flex-row justify-between mt-4">
+      <button
+        (click)="addToOrder(item)"
+        class="bg-purple-700 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
+      >
+        <i class="fa fa-shopping-cart"></i> Add to Cart
+      </button>
+  
+  
+      <button
+      (click)="
+      openDialog(
+       item.name,categoryTitle,item.description,item.price
+      )
+    "
+        class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-full mb-2 sm:mb-0"
+      >
+        <i class="fa fa-eye"></i> View
+      </button>
+    </div>
+  </ng-container>
       </ng-template>
     </p-card>
 

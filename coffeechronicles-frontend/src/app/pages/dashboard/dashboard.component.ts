@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 
 import { ViewbillproductsComponent } from 'src/app/viewbillproducts/viewbillproducts.component';
 import Swal from 'sweetalert2';
+import { RatereviewComponent } from 'src/app/ratereview/ratereview.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnInit {
     private dialog:MatDialog,
     private toastr:ToastrService,
     private router: Router,
-   
+  
   ) {}
   ngOnInit(): void {
     this.getAllMenuItems();
@@ -150,6 +151,24 @@ export class DashboardComponent implements OnInit {
       saveAs(blob, fileName + '.pdf');
     });
     
+  }
+
+  getRole(){
+    return this.authService.getRole();
+  }
+
+  handleReviewAction(values:any){
+    const dialogConfig=new MatDialogConfig();
+    dialogConfig.data={
+      data:values
+    }
+    dialogConfig.width="100%";
+    console.log(dialogConfig);
+    
+    const dialogRef = this.dialog.open(RatereviewComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
   }
 }
 

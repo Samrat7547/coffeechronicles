@@ -1,0 +1,90 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxfLayout="row" fxLayoutAlign="space-between center">
+        <span>{{dialogData.action}}    View Bill</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <table id="customers">
+        <tr>
+            <td><b>Name: </b>{{data?.name}}</td>
+            <td><b>Email: </b>{{data?.email}}</td>
+        </tr>
+        <tr>
+            <td><b>Contact Number: </b>{{data?.contactNumber}}</td>
+            <td><b>Payment Method: </b>{{data?.paymentMethod}}</td>
+        </tr>
+    </table>
+
+   
+
+    <div class="col-md-4 mb10" *ngFor="let q of dataSource;let i = index">
+        <!-- <h3>{{q.title}}</h3> -->
+
+        <mat-card
+          style="
+            background-color: rgb(236, 236, 230);
+            margin-top: 10px;
+            margin-left: 10px;
+            margin-right: 20px;
+          "
+        >
+          <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>{{ q.name}}</mat-card-title>
+           
+          </mat-card-header>
+
+          <mat-card-content class="review-form">
+            <form [formGroup]="reviewForms[i]" (ngSubmit)="submitReview(reviewForms[i], q)">
+              <mat-form-field >
+                <mat-label>Rating(out of 5)</mat-label>
+                <!-- Use a custom star-rating component or Angular Material's mat-slider, etc. -->
+                <input matInput type="number" formControlName="rating" />
+               
+              </mat-form-field>
+          
+              <mat-form-field style="margin-left: 50px; width: 370px;">
+                <mat-label>Review</mat-label>
+                <textarea matInput formControlName="review"></textarea>
+              </mat-form-field>
+          
+              <button
+                mat-raised-button
+                color="accent"
+                type="submit"
+                [disabled]="reviewForms[i].invalid"
+                style="margin-left: 50px"
+              >
+                Add
+              </button>
+            </form>
+          </mat-card-content>
+        
+          
+        </mat-card>
+
+       
+      </div>
+
+      <div class="center">
+        <p>
+            After adding reviews, click on the Submit button to submit all reviews you have given.
+          </p>
+      <button
+    mat-raised-button
+    color="primary"
+    (click)="submitAllReviews()"
+    [disabled]="reviews.length === 0"
+  >
+    Submit All Reviews
+  </button>
+  </div>
+
+
+
+</mat-dialog-content>

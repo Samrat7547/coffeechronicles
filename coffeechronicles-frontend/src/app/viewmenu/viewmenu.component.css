@@ -1,4 +1,8 @@
 /* viewuser.component.css */
+:host {
+  display: block;
+  height: 700px; 
+}
 .user-card {
     width: 800px;
     margin: 20px auto;
@@ -9,6 +13,20 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center;
+   
+  }
+  /* .user-card-scrollable {
+    overflow: hidden;
+  }
+  
+  .scrollable-content {
+    max-height: 100px; 
+    overflow-y: auto;
+  } */
+  
+  .responsive_table {
+    height: 40%; 
+    overflow-y: auto;
   }
   
   h2 {

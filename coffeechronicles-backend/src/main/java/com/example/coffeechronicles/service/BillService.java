@@ -1,6 +1,7 @@
 package com.example.coffeechronicles.service;
 
 import com.example.coffeechronicles.entity.Bill;
+import com.example.coffeechronicles.entity.Product;
 import com.example.coffeechronicles.entity.TransactionDetails;
 import org.springframework.http.ResponseEntity;
 
@@ -16,4 +17,8 @@ public interface BillService {
     TransactionDetails createTransaction(Double amount);
 
     ResponseEntity<String> delete(Integer id);
+
+
+
+    ResponseEntity<String> update(Map<String, String> requestMap);
 }
