@@ -14,6 +14,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ManageUserComponent } from './pages/manage-user/manage-user.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { authGuard } from './services/auth.guard';
+import { ReviewComponent } from './pages/review/review.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path:'changePassword', component:ChangePasswordComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'manage-user', component: ManageUserComponent},
-  { path: 'view-user', component: ViewUserComponent}
+  { path: 'view-user', component: ViewUserComponent},
+  { path: 'review' , component:ReviewComponent}
 ];
 
 @NgModule({

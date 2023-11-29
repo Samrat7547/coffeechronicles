@@ -1,0 +1,17 @@
+/* CSS to limit the width and set text to wrap after 6 words */
+.multiline-review {
+    max-width: 100px; /* Adjust the width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Adjust the number of lines as needed */
+    -webkit-box-orient: vertical;
+}
+.mat-row {
+    max-height: 100px; /* Adjust the height as needed */
+    overflow: hidden;
+}
+/* CSS to wrap text in the "Review" column */
+.mat-cell.wrap-review {
+    white-space: normal;
+}

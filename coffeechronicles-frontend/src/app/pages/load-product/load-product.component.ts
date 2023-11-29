@@ -194,6 +194,7 @@ export class LoadProductComponent implements OnInit {
     title: any,
     description: any,
     price: any,
+    pid:any
   ) {
     const dialogRef = this.dialog.open(ViewmenuComponent, {
       data: {
@@ -201,6 +202,7 @@ export class LoadProductComponent implements OnInit {
         title: title,
         description: description,
         price: price,
+        pid:pid
       },
     });
 

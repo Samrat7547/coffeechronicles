@@ -205,9 +205,9 @@ export class OrderComponent implements OnInit {
           this.router.navigate(['/order']);
 
           // Reload the window after 2 seconds
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 2000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2500);
          
         },
         (error: HttpErrorResponse) => {
@@ -276,9 +276,9 @@ export class OrderComponent implements OnInit {
               paymentMethod: ['', Validators.required],
             });
                 console.log(res);
-                // setTimeout(() => {
-                //   window.location.reload();
-                // }, 3000);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
               },
               (error: HttpErrorResponse) => {
                 this.toastr.success('Your order is placed!', 'Order successful');

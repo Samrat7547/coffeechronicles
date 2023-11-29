@@ -119,7 +119,7 @@ export class RatereviewComponent {
         
       }
     );
-    // this.dialogRef.close();
+    this.dialogRef.close();
     // Show a success message after all reviews are submitted
     this.toastr.success('Success!', 'All Reviews submitted');
     // Reset the form and reviews array after final submission
