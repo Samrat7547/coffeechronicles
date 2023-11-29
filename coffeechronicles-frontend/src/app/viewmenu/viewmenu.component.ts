@@ -56,4 +56,7 @@ export class ViewmenuComponent {
     // You can implement additional logic here if needed
     this.dialogRef.close();
   }
+  getStars(rating: number): number[] {
+    return Array.from({ length: rating }, (_, i) => i);
+  }
 }

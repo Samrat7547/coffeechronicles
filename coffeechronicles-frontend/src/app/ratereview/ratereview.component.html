@@ -40,30 +40,47 @@
           </mat-card-header>
 
           <mat-card-content class="review-form">
-            <form [formGroup]="reviewForms[i]" (ngSubmit)="submitReview(reviewForms[i], q)">
-              <mat-form-field >
-                <mat-label>Rating(out of 5)</mat-label>
-                <!-- Use a custom star-rating component or Angular Material's mat-slider, etc. -->
-                <input matInput type="number" formControlName="rating" />
-               
-              </mat-form-field>
-          
-              <mat-form-field style="margin-left: 50px; width: 370px;">
-                <mat-label>Review</mat-label>
-                <textarea matInput formControlName="review"></textarea>
-              </mat-form-field>
-          
-              <button
-                mat-raised-button
-                color="accent"
-                type="submit"
-                [disabled]="reviewForms[i].invalid"
-                style="margin-left: 50px"
-              >
-                Add
-              </button>
-            </form>
-          </mat-card-content>
+    <form [formGroup]="reviewForms[i]" (ngSubmit)="submitReview(reviewForms[i], q)">
+      <!-- Rating and Stars Section -->
+      <div class="review-add-section">
+      <div class="rating-stars-section">
+        
+        <mat-label>Rating</mat-label>
+        <div class="star-rating">
+          <mat-icon
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+            (click)="setRating(star, reviewForms[i].controls['rating'])"
+            [ngClass]="star <= reviewForms[i].controls['rating'].value ? 'gold' : 'white'"
+          >
+            star
+          </mat-icon>
+        </div>
+        <input
+          type="hidden"
+          formControlName="rating"
+          [value]="reviewForms[i].controls['rating'].value"
+        />
+      </div>
+
+      <!-- Review and Add Button Section -->
+      
+        <mat-form-field style="width: 370px; margin-left: 30px;">
+          <mat-label>Review</mat-label>
+          <textarea matInput formControlName="review"></textarea>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="reviewForms[i].invalid"
+          style="margin-left: 30px;margin-top: 20px;"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
         
           
         </mat-card>
