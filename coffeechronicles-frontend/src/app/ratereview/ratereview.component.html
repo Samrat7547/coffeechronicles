@@ -24,7 +24,8 @@
 
     <div class="col-md-4 mb10" *ngFor="let q of dataSource;let i = index">
         <!-- <h3>{{q.title}}</h3> -->
-
+        <ng-container *ngIf="!reviewSubmitted[i]">
+         
         <mat-card
           style="
             background-color: rgb(236, 236, 230);
@@ -40,7 +41,7 @@
           </mat-card-header>
 
           <mat-card-content class="review-form">
-    <form [formGroup]="reviewForms[i]" (ngSubmit)="submitReview(reviewForms[i], q)">
+    <form [formGroup]="reviewForms[i]" (ngSubmit)="submitReview(reviewForms[i], q,i)">
       <!-- Rating and Stars Section -->
       <div class="review-add-section">
       <div class="rating-stars-section">
@@ -84,7 +85,7 @@
         
           
         </mat-card>
-
+      </ng-container>
        
       </div>
 
