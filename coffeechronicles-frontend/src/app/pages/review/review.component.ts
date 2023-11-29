@@ -70,4 +70,8 @@ export class ReviewComponent implements OnInit {
       }
     })
   }
+
+  getStars(rating: number): number[] {
+    return Array.from({ length: rating }, (_, i) => i);
+  }
 }

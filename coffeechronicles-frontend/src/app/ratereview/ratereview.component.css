@@ -1,71 +1,91 @@
 .mat-toolbar {
-    margin: -24px;
-    margin-bottom: 0;
-    width: auto;
-    margin-bottom: 10PX;
-    margin-top: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  .spacer {
-    flex: 1 auto;
-  }
-  
-    mat-form-field{
-        padding: 5px;
-    }
+  margin: -24px;
+  margin-bottom: 0;
+  width: auto;
+  margin-bottom: 10PX;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
 
-    .float-right{
-        float: right;
-    }
-    
-    /* mat-card{
-        padding: 20px;
-    } */
-    
-    table {
-        width: 100%;
-      }
+.spacer {
+  flex: 1 auto;
+}
 
+mat-form-field {
+  padding: 5px;
+}
 
-      #customers {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-      }
-      
-      #customers td, #customers th {
-        border: 1px solid #ddd;
-        padding: 8px;
-      }
-      
-      #customers th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: #04AA6D;
-        color: white;
-      }
+.float-right {
+  float: right;
+}
 
-      .visible-input {
-        width: 200px; /* Adjust the width as needed */
-        visibility: visible !important; /* Ensure the input is always visible */
-        display: block; /* Ensure the input is displayed */
-      }
-      .mb20{
-        margin-bottom: 20px;
-    }
-    .review-form {
-        display: flex;
-        gap: 10px; /* Adjust the spacing between form elements */
-      }
+table {
+  width: 100%;
+}
 
-      .center {
-        text-align: center;
-        margin-top: 20px;
-      }
-      
-      /* You can add additional styling as needed */
-      
-      
-    
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+.visible-input {
+  width: 200px; /* Adjust the width as needed */
+  visibility: visible !important; /* Ensure the input is always visible */
+  display: block; /* Ensure the input is displayed */
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.review-form {
+  /* display: flex;
+  flex-direction: column;  */
+  gap: 10px; 
+}
+
+.rating-stars-section {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.review-add-section {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start; 
+  margin-top: 10px;/* Align items to the start of the cross axis */
+}
+
+.center {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.star-rating mat-icon {
+  cursor: pointer;
+}
+
+.star-rating .gold {
+  color: gold;
+}
+
+.star-rating .white {
+  color: white;
+}

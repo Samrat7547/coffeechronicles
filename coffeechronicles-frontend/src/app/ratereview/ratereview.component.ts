@@ -20,6 +20,7 @@ export class RatereviewComponent {
   reviewForms: FormGroup[] = [];
   reviews: any[] = [];
   userDetails: any;
+  selectedStars: number[] = [];
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -136,5 +137,27 @@ export class RatereviewComponent {
     return null;
   }
 
+
+  getStars(rating: number): number[] {
+    const totalStars = 5;
+    const stars = Array(totalStars).fill(0).map((_, index) => index + 1);
+    return this.selectedStars.length > 0 ? this.selectedStars : stars;
+  }
+  
+  
+  setRating(star: number, control: AbstractControl): void {
+    const currentRating = control.value;
+    if (currentRating === star) {
+      // If the clicked star is the current rating, deselect all stars
+      this.selectedStars = [];
+      control.setValue(null);
+    } else {
+      // Otherwise, select stars up to the clicked star
+      this.selectedStars = Array(star).fill(0).map((_, index) => index + 1);
+      control.setValue(star);
+    }
+  }
+  
+  
 }
 
