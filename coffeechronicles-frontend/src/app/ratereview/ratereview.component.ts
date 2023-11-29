@@ -21,7 +21,7 @@ export class RatereviewComponent {
   reviews: any[] = [];
   userDetails: any;
   selectedStars: number[] = [];
-
+  reviewSubmitted: boolean[] = []; 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<ViewbillproductsComponent>,private fb: FormBuilder,private toastr:ToastrService,
@@ -56,7 +56,7 @@ export class RatereviewComponent {
     });
   }
 
-  submitReview(form: FormGroup, q: any): void {
+  submitReview(form: FormGroup, q: any,index: number): void {
     if (form.valid) {
       const reviewData = {
         rating: form.value.rating,
@@ -71,7 +71,7 @@ export class RatereviewComponent {
 
       // Show a success message
       this.toastr.success('Success!', 'Review added successfully');
-
+      this.reviewSubmitted[index] = true;
       // Reset the form after submission
       form.reset();
     } else {
@@ -156,6 +156,11 @@ export class RatereviewComponent {
       this.selectedStars = Array(star).fill(0).map((_, index) => index + 1);
       control.setValue(star);
     }
+  }
+
+  hasGivenReview(index: number): boolean {
+    // Check if the reviewForms array has a FormGroup at the specified index
+    return this.reviewForms[index] !== undefined;
   }
   
   
