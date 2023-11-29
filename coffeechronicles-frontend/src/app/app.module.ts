@@ -56,6 +56,7 @@ import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { ViewbillproductsComponent } from './viewbillproducts/viewbillproducts.component';
 import { ViewmenuComponent } from './viewmenu/viewmenu.component';
 import { RatereviewComponent } from './ratereview/ratereview.component';
+import { ReviewComponent } from './pages/review/review.component';
 
 
 
@@ -103,6 +104,7 @@ const config: SocialAuthServiceConfig = {
     ViewbillproductsComponent,
     ViewmenuComponent,
     RatereviewComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,

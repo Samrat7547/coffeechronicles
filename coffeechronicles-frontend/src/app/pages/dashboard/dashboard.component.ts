@@ -166,8 +166,16 @@ export class DashboardComponent implements OnInit {
     console.log(dialogConfig);
     
     const dialogRef = this.dialog.open(RatereviewComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    //   this.tableData();
+    // });
+    dialogRef.afterClosed().subscribe(result => {
+      // This code will be executed after the dialog is closed
+      console.log('Dialog closed:', result);
+  
+      // Call the tableData() function here to update the table data
+      this.tableData();
     });
   }
 }

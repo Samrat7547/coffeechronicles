@@ -18,6 +18,14 @@ export class ReviewService {
       },
     });
   }
+  deleteReview(rid: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${this.baseUrl}/${rid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
   addReview(review: any): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.post(`${this.baseUrl}/add`, review, {
